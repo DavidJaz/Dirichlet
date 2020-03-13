@@ -21,7 +21,20 @@ The category $\DirSeries$ is the arrow category $\Sa^{\downarrow}$ of $\Sa$.
 \begin{prop}
   There is a fully faithful inclusion $\bang_{(-)} : \Sa \to \DirSeries$ given by
   $$X \mapsto \begin{tikzcd} X \arrow[d, "!_X"] \\ \ast \end{tikzcd}$$
+  This functor preserves all limits and weakly contractible colimits
 \end{prop}
+\begin{proof}
+  This functor preserves all limits because it has a left adjoint given by sending $\pi : E \to B$ to $E$ (in terms of families, this sends the family $E_b$ to the sum $\sum_{b : B} E_b$). 
+  
+  To see that it preserves weakly contractible colimits, recall that colimits in $H^{\downarrow}$ are calculated pointwise. It remains to show, then, that the map
+  \[
+    \begin{tikzcd}
+    \colim S_i \arrow[r, equals] \arrow[d] & \colim S_i \arrow[d] \\
+    \colim \ast \arrow[r] & \ast 
+    \end{tikzcd}
+  \]
+  is an equivalence in $H^{\downarrow}$, for which it suffices to show that $\colim \ast$ is contractible. But the colimit of the terminal diagram is the (Kan-fibrant replacement of) its indexing simplicial set -- since we assumed the diagram was weakly contractible, $\colim \ast$ is contractible.
+\end{proof}
 
 \begin{defn}
 To every Dirichlet series $\pi : E \to B$, we associate its \emph{extent}
