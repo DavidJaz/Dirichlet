@@ -3,30 +3,107 @@
 
 \section{Dirichlet Series and Dirichlet Functors}
 
+Before we come to the theory of Dirichlet series and Dirichlet functors, lets
+review the theory of polynomials and polynomial functors as developed by
+\cite{GHK:Analytic.Monads}.
+
+A \emph{polynomial functor} is a functor of the form
+\begin{equation}\label{eq:polynomial.functor.type.theoretic}
+X \mapsto \sum_{b : B}X^{E_b} : \Ha \to \Ha
+\end{equation}
+for some family of \emph{exponent} types $E_{(-)} : B \to \Type$ indexed by a
+homotopy type $B$. We refer to this family of exponents as the
+\emph{polynomial}, and the associated functor as its \emph{extent}. If the exponents $E_b$ are finite sets, then we can collect
+terms to express the value of this functor at a homotopy type $X$ (non-canonically) as
+$$\sum_{n : \Nb} B_n \times X^n \sslash n!$$
+which now looks like a power series in $X$. It is, however, much better to work
+with the ``coordinate-invariant'' presentation $\sum_{b : B} X^{E_b}$.
+
+The family of exponents $E_{(-)} : B \to \Type$ can also be expressed as the
+projection $\fst : \sum_{b : B} E_b \to B$ from its total space. Defining $E
+:\equiv \sum_{b : B} E_b$, we see that a \emph{polynomial} may equivalently be
+defined as a map $\pi : E \to B$ whose fibers are now seen as the exponents
+$E_b$. The extent if $\pi : E \to B$ may then be described as the composite
+$$\Ha \xto{E^{\ast}} \Ha_{/B} \xto{\pi_{\bang}} \Ha_{/B} \xto{B_{\ast}} \Ha$$
+
+A map between polynomials should induce a map between their extents. Seeing that
+the exponents $E_b$ occupy a contravariant position in the polynomial functor
+formula Eq. \ref{eq:polynomial.functor.type.theoretic}, we may define a morphism
+from $\pi : E \to B$ to $\pi' : E' \to B'$ to be a map $f : B \to B'$ on the
+indexing types, together with a fiberwise map $f_{\sharp} : \dprod{b : B} E'_{f
+  b} \to E_b$ going ``backwards'' on the exponents. In terms of the maps, this is a diagram of
+the form:
+\[
+  \begin{tikzcd}
+    E \arrow[d, "\pi"'] \arrow[r, leftarrow, "f_{\sharp}"] & \bullet \arrow[d] \arrow[r]
+    \arrow[dr, phantom, "\ulcorner" very near start] & E' \arrow[d, "\pi'"] \\
+    B \arrow[r, equals] & B \arrow[r, "f"'] & B'
+  \end{tikzcd}
+\]
+
+GHK characterize the functors which are the extents of polynomials, and show
+that this gives an equivalence of $\infty$-categories.
+\begin{thm}
+A functor $F : \Ha \to \Ha$ is the extent of a polynomial if and only if it is
+accessible and preserves weakly contractible limits.
+\end{thm}
+
+We will prove an analogous theorem in this section for the contravariant
+analogue of polynomial functors: Dirichlet functors. These are functors of the
+form
+$$S \mapsto \sum_{b : B} E_b^S$$
+for $E_{(-)} : B \to \Type$ a family of \emph{bases}. In Section
+\ref{sec:ordinary.dirichlet.series}, we will see how these functors categorify
+Dirichlet series. For now, we will prove the following theorem:
+\begin{thm}
+The category of Dirichlet functors $D : \Ha\op \to \Ha$ is equivalent to the
+category $\Ha^{\downarrow}$ of Dirichlet series. It is, in particular, an $\infty$-topos.
+\end{thm}
+
+
 \begin{defn}
-A \emph{Dirichlet functor} is a contraviariant functor $F : \Sa\op \to \Sa$
-which (?is accessible and?) sends weakly contractible colimits to limits.
+A \emph{Dirichlet functor} is a contraviariant functor $F : \Ha\op \to \Ha$
+which preserves weakly contractible limits.
 
 The category $\Dir$ of Dirichlet functors is the full subcategory of
-$\Fun(\Sa\op,\, \Sa)$ spanned by the Dirichlet functors.
+$\Fun(\Ha\op,\, \Ha)$ spanned by the Dirichlet functors.
 \end{defn}
 
 \begin{defn}
-A \emph{Dirichlet series} is a bundle $\pi : E \to B$ in $\Sa$. We think of this
+A \emph{Dirichlet series} is a bundle $\pi : E \to B$ in $\Ha$. We think of this
 as a family of homotopy types $E_b$ varying with $b : B$.
 
-The category $\DirSeries$ is the arrow category $\Sa^{\downarrow}$ of $\Sa$.
+The category $\DirSeries$ is the arrow category $\Ha^{\downarrow}$ of $\Ha$.
 \end{defn}
 
 \begin{prop}
-  There is a fully faithful inclusion $\bang_{(-)} : \Sa \to \DirSeries$ given by
-  $$X \mapsto \begin{tikzcd} X \arrow[d, "!_X"] \\ \ast \end{tikzcd}$$
-  This functor preserves all limits and weakly contractible colimits
+  There is an adjoint quintuple:
+  \[
+    \begin{tikzcd}
+      \Ha \arrow[r, "\const"] \arrow[r, leftarrow, shift left = 5,
+      "\term{cod}"] \arrow[r, leftarrow, shift right = 5, "\term{dom}"]
+      \arrow[r, shift left = 10, "!^{(-)}"]  \arrow[r, shift right = 10, "!_{(-)}"] & \Ha^{\downarrow}
+    \end{tikzcd}
+  \]
+  All of the functors $\Ha \to \Ha^{\downarrow}$ are fully faithful.
 \end{prop}
 \begin{proof}
-  This functor preserves all limits because it has a left adjoint given by sending $\pi : E \to B$ to $E$ (in terms of families, this sends the family $E_b$ to the sum $\sum_{b : B} E_b$). 
-  
-  To see that it preserves weakly contractible colimits, recall that colimits in $H^{\downarrow}$ are calculated pointwise. It remains to show, then, that the map
+There is an adjoint triple $\begin{tikzcd} \ast \arrow[r,leftarrow] \arrow[r,
+  bend left] \arrow[r, bend right] & \downarrow \end{tikzcd}$. The middle three
+functors are given by restricting along this adjoint triple; the outer two are
+given by Kan extending, or more concretely:
+  $$X \mapsto \begin{tikzcd} 0 \arrow[d, "!^X"] \\ X \end{tikzcd}$$
+  $$X \mapsto \begin{tikzcd} X \arrow[d, "!_X"] \\ \ast \end{tikzcd}$$
+It is easy to see that the unit $X \to \term{dom} !_{X}$ is an equivalence (it is in
+fact an identity), so $!_{(-)}$ is fully faithful. Therefore, all the functors
+going from $\Ha \to \Ha^{\downarrow}$ are fully faithful.
+\end{proof}
+
+\begin{prop}
+  The functor $!_{(-)}$ preserves weakly contractible colimits.
+\end{prop}
+\begin{proof}
+  To see that $!_{(-)}$ preserves weakly contractible colimits, recall that colimits in $H^{\downarrow}$ are calculated pointwise. It remains to show, then, that the map
   \[
     \begin{tikzcd}
     \colim S_i \arrow[r, equals] \arrow[d] & \colim S_i \arrow[d] \\
@@ -38,23 +115,23 @@ The category $\DirSeries$ is the arrow category $\Sa^{\downarrow}$ of $\Sa$.
 
 \begin{defn}
 To every Dirichlet series $\pi : E \to B$, we associate its \emph{extent}
-$\term{ext}_{\pi} : \Sa\op \to \Sa$ given by
+$\term{ext}_{\pi} : \Ha\op \to \Ha$ given by
 $$\term{ext}_{\pi}(S) :\equiv \DirSeries(\bang_S,\, \pi).$$
-That is, $\term{ext} : \DirSeries \to \Fun(\Sa\op,\, \Sa)$ is the transpose of
-$\DirSeries(\bang_{(-)}, -) : \Sa\op \times \DirSeries \to \Sa$.
+That is, $\term{ext} : \DirSeries \to \Fun(\Ha\op,\, \Ha)$ is the transpose of
+$\DirSeries(\bang_{(-)}, -) : \Ha\op \times \DirSeries \to \Ha$.
 
 In terms of type families, this is the functor
 $$S \mapsto \sum_{b : B} E_b^S.$$
 And it may be expressed as the composite
-$$\Sa\op \xto{B^{\ast}\op} (\Sa_{/B})\op \xto{[-,\pi]} \Sa_{/B} \xto{B_{\ast}}
-\Sa.$$
+$$\Ha\op \xto{B^{\ast}\op} (\Ha_{/B})\op \xto{[-,\pi]} \Ha_{/B} \xto{B_{\ast}}
+\Ha.$$
 \end{defn}
 
 
 
 
 \begin{prop}
-The functor $\term{ext} : \DirSeries \to \Fun(\Sa\op,\, \Sa)$ has a left exact
+The functor $\term{ext} : \DirSeries \to \Fun(\Ha\op,\, \Ha)$ has a left exact
 left adjoint given by
 $$D \mapsto \begin{tikzcd} D(\ast) \arrow[d, "D\bang_0"] \\ D(0) \end{tikzcd}$$
 The counit of this adjunction is an equivalence, and so $\term{ext}$ is fully faithful.
@@ -96,22 +173,22 @@ The the dotted inclusion $\Ca^{S} \to \Ca^{S^{\triangleleft}}_{\ast}$ is an equi
 \end{lem}
 
 \begin{lem}\label{lem:every.type.weakly.contractible.colimit}
-  Every $S$ in $\Sa$ is the colimit of the diagram $S^{\triangleleft} \to \Sa$
+  Every $S$ in $\Ha$ is the colimit of the diagram $S^{\triangleleft} \to \Ha$
 sending the apex to $0$ and every other element to $\ast$; that is, the
 composite
 $$S^{\triangleleft} \xto{\bang^{\triangleleft}} \ast^{\triangleleft} \xto{0 \to
-  1} \Sa.$$
+  1} \Ha.$$
 \end{lem}
 \begin{proof}
 \emph{Idea:} By Lemma \label{lem:cone.initial.equivalence}, this diagram
-corresponds to the terminal diagram $\ast : S \to \Sa$, and $S$ is well known to
+corresponds to the terminal diagram $\ast : S \to \Ha$, and $S$ is well known to
 be the colimit of this diagram (see Lurie, probably).
 \end{proof}
 
 \begin{thm}\label{thm:dirichlet.series.functors.equivalence}
   A contravariant functor is Dirichlet if and only if it is the extent of a
   Dirichlet series. That is, the adjunction $\term{ext} \dashv (-)\bang_0 : \DirSeries \leftrightarrows
-  \Fun(\Sa\op,\, \Sa)$ restricts to an equivalence $\DirSeries \simeq \Dir$. As
+  \Fun(\Ha\op,\, \Ha)$ restricts to an equivalence $\DirSeries \simeq \Dir$. As
   a corollary, $\Dir$ is an $\infty$-topos
 \end{thm}
 \begin{proof}
@@ -119,25 +196,33 @@ be the colimit of this diagram (see Lurie, probably).
   \emph{Idea:} Weakly contractible limits commute with dependent sums. More
   fully: the extent of a Dirichlet series $\pi : E \to B$ can be expressed as
   the composite
-  $$\Sa\op \xto{B^{\ast}\op} (\Sa_{/B})\op \xto{[-,\pi]} \Sa_{/B} \xto{B_{\ast}}
-  \Sa.$$
+  $$\Ha\op \xto{B^{\ast}\op} (\Ha_{/B})\op \xto{[-,\pi]} \Ha_{/B} \xto{B_{\ast}}
+  \Ha.$$
   The first functor in this composite has both adjoints, and so in particular
   preserves all limits. The second is part of a two-variable adjunction, and so
   also preserves all limits. Finally, the last functor is the forgetful functor
-  $\Sa_{/B} \to \Sa$, and by Lemma 2.2.7 of \cite{GHK:Analytic.Monads}, these
+  $\Ha_{/B} \to \Ha$, and by Lemma 2.2.7 of \cite{GHK:Analytic.Monads}, these
   functors always create weakly contractible limits.
 
   Now, we show that if a functor $D$ is Dirichlet, then the unit $D \Rightarrow
   \term{ext}_{D\bang_0}$ is an equivalence.
-  \emph{Idea:} We note that every $S \in \Sa$ is the colimit of the diagram
-  $S^{\triangleleft} \to \Sa$ sending the apex of the cone to $0$ and every
+  \emph{Idea:} We note that every $S \in \Ha$ is the colimit of the diagram
+  $S^{\triangleleft} \to \Ha$ sending the apex of the cone to $0$ and every
   element of $S$ to $\ast$ (see Lemma
   \ref{lem:every.type.weakly.contractible.colimit}). This is a weakly
   contractible colimit, and so it is preserved by $D$; therefore, $D(S)$ is the
   limit of the diagram
   $$S^{\triangleleft}\op \xto{\bang^{\triangleleft}\op}
-  \ast^{\triangleleft}\op \xto{\bang_0\op} \Sa\op \xto{D} \Sa$$
-  But so is $\DirSeries(!_S,\, D!_0)$.
+  \ast^{\triangleleft}\op \xto{\bang_0\op} \Ha\op \xto{D} \Ha$$
+  But so is $\DirSeries(!_S,\, D!_0)$, since
+  \begin{align*}
+    \DirSeries(!_S, D!_0) &=  \DirSeries(!_{\colim (S^{\triangleleft} \to \ast^{\triangleleft} \to \Ha)}, D!_0) \\
+    &\simeq \DirSeries(\colim (S^{\triangleleft} \to \ast^{\triangleleft} \to \Ha \xto{!_{(-)}} \DirSeries), D!_0) \\
+    &\simeq \lim (S^{\triangleleft}\op \xto{\bang^{\triangleleft}\op}
+  \ast^{\triangleleft}\op \xto{\bang_0\op} \Ha\op \xto{!_{(-)}} \DirSeries\op \xto{\DirSeries(-, D!_0)} \Ha)\\
+    &\simeq \lim (S^{\triangleleft}\op \xto{\bang^{\triangleleft}\op}
+  \ast^{\triangleleft}\op \xto{\bang_0\op} \Ha\op \xto{D} \Ha) 
+  \end{align*}
 \end{proof}
 
 \section{Cartisian Morphisms of Dirichlet Series and Functors}
@@ -156,7 +241,7 @@ We denote by $\DirSeries_{\term{Cart}}$ the $\infty$-category of Dirichlet
 series and cartesian morphisms between them.
 
 A natural transformation $F \Rightarrow F'$ is \emph{cartesian} if its
-naturality squares are pullbacks. We denote by $\Fun_{\term{Cart}}(\Sa\op, \Sa)$
+naturality squares are pullbacks. We denote by $\Fun_{\term{Cart}}(\Ha\op, \Ha)$
 the $\infty$-category of (contravariant) functors and cartesian natural transformations.
 \end{defn}
 
@@ -170,7 +255,7 @@ $$\Dir_{\term{Cart}} \simeq \DirSeries_{\term{Cart}}.$$
 We have an equivalence $\DirSeries_{\type{Cart}} \simeq
 \type{PolyEnd}_{\type{Cart}}$ between the $\infty$-category of Dirichlet series
 and cartesian morphisms and the $\infty$-category of polynomial endofunctors of
-$\Sa$ and cartesian morphisms. This gives us an equivalence
+$\Ha$ and cartesian morphisms. This gives us an equivalence
 $$\Dir_{\term{Cart}} \simeq \type{PolyEnd}_{\term{Cart}}$$
 which we call the \emph{formal Mellin transform} -- since it can be seen as
 acting on the ``basis'' of representables by
