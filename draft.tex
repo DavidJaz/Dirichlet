@@ -71,7 +71,7 @@ we find that the cardinality
 $$|P(X)| = \sum_{n \in \Nb} |B_n||X|^n$$
 is a polynomial in the cardinality of $X$. Similarly,
 $$|D(X)| = \sum_{n \in \Nb} |B_n|n^{|X|}$$
-resembles a Dirichlet series in the cardinalty of $X$. Accoringly, we call such
+resembles a Dirichlet series in the cardinality of $X$. Accoringly, we call such
 sums of contravariant representables \emph{Dirichlet functors}.
 
 We will show in this paper that Dirichlet functors are, quite robustly, the
@@ -128,7 +128,7 @@ $$X^N \mapsto N^X$$
 turning polynomial functors into Dirichlet functors, and vice versa. But the
 natural transformations between each sort of functor induce different morphisms
 between the bundles; natural tranformations between polynomial functors induce
-contravariant bundle morphisms, while natural transformations betwee Dirichlet
+contravariant bundle morphisms, while natural transformations between Dirichlet
 functors induce covariant bundle morphisms. However, if we restrict to those
 morphisms of bundles which are \emph{isovariant} on the fibers --- that is, the
 pullback diagrams of the form
@@ -166,7 +166,8 @@ Polynomial functors play another very important role: they are \emph{generating
   functors} for flat combinatorial species. That is, we have a (non-canonical)
 identification
 $$P(X) \cong \sum_{n \in \Nb} C_n \times X^n/n!$$
-for sets $C_n$ on which the symmetric groups $\Aut(\underline{n})$ act freely.
+for sets $C_n$ on which the symmetric groups $\Aut(\underline{n})$ act freely
+(for \emph{finitary} $P$, commuting with filtered colimits).
 The generating functors for general combinatorial species --- the \emph{analytic
 functors} --- are not in general polynomial due to a loss of information when
 quotienting out by the action of the symmetric groups. This can be fixed by
@@ -181,7 +182,7 @@ $$\sum_{n \in \Nb} a_n n^{-s}.$$
 
 In \emph{$\infty$-Operads as Analytic Monads} \cite{GHK:Analytic.Monads},
 Gepner, Haugseng, and Kock take this approach and develop the theory of
-polynomial functors on homotopy types. In this setting, being analtyic is a
+polynomial functors on homotopy types. In this setting, being analytic is a
 property of a polynomial functors, and is equivalent to admitting a cartesian
 map to the functor $\type{Sym}$ given by
 $$X \mapsto \sum_{n : \Nb} X^n \sslash n!$$
@@ -322,7 +323,7 @@ right Kan extension --- is an isomorphism.
     or equivalently the composite
   $$\Set\op \xto{(B^{\ast})\op} (\Set_{/B})\op \xto{[-, \pi]} \Set_{/B}
   \xto{B_{\ast}} \Set.$$
-\item The functor restricted representable functor
+\item The restricted representable functor
   $\Set^{\downarrow}(!_{(-)}, \pi)$.
 \item The functor
   $$S \mapsto \lim(\Hom_{\Set}(!_0, S) \to \downarrow \xto{\pi} \Set)$$
@@ -370,7 +371,7 @@ First, we show that Dirichlet functors preserve connected limits. If $D$ is
 Dirichlet, then by Prop \ref{prop:set.characterizing.extent}, $D$ is naturally
 isomorphic to the composite
 $$\Set\op \xto{(B^{\ast})\op} (\Set_{/B})\op \xto{[-, \pi]} \Set_{/B}
-\xto{B_\ast}.$$
+\xto{B_\ast} \Set.$$
 As $(B^{\ast})\op$ is a right adjoint, it commutes with all limits, and as $[-,\pi]$
 is part of a multivariable adjunction, it also commutes with all limits.
 Finally, we note that $B_{\ast}$ commutes with connected limits.
@@ -486,7 +487,7 @@ right Kan extension --- is an equivalence by Proposition 9.4.4 of \cite{RV:Eleme
     or equivalently the composite
   $$\Ha\op \xto{(B^{\ast})\op} (\Ha_{/B})\op \xto{[-, \pi]} \Ha_{/B}
   \xto{B_{\ast}} \Ha.$$
-\item The functor restricted representable functor
+\item The restricted representable functor
   $\Ha^{\downarrow}(!_{(-)}, \pi)$.
 \item The functor
   $$S \mapsto \lim(\Hom_{\Ha}(!_0, S) \to \downarrow \xto{\pi} \Ha)$$
@@ -523,9 +524,9 @@ weakly contractible limits.
 \begin{proof}
 First, we show that Dirichlet functors preserve connected limits. If $D$ is
 Dirichlet, then by Prop \ref{prop:set.characterizing.extent}, $D$ is naturally
-isomorphic to the composite
+equivalent to the composite
 $$\Ha\op \xto{(B^{\ast})\op} (\Ha_{/B})\op \xto{[-, \pi]} \Ha_{/B}
-\xto{B_\ast}.$$
+\xto{B_\ast} \Ha.$$
 As $(B^{\ast})\op$ is a right adjoint, it commutes with all limits, and as $[-,\pi]$
 is part of a multivariable adjunction, it also commutes with all limits.
 Finally, we note that $B_{\ast}$ commutes with connected limits.
