@@ -1,61 +1,4 @@
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% First Intro
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-There are two basic sorts of generating functions in prevalent use in
-combinatorics. There are the \emph{analytic} generating functions arising from power
-series
-$$\sum_{n \in \Nb} a_n x^n$$
-and the \emph{Dirichlet} generating functions arising from Dirichlet series
-$$\sum_{n \in \Nb} a_n n^{-s}.$$
-The sequence of coefficients $a_n$ counts the amount of objects $A_n$ associated to an
-$n$-element set $\underline{n} := \{0,\ldots, n-1\}$. For example, if $A_n$ is
-the set of injections from $\underline{n}$ to $\underline{k}$, then $a_n = {k
-  \choose n}$.
-
-The power of the generating function formalism lies in way that algebraic and
-analytic operations on the generating functions shadow combinatorial operations
-on the sets that their coefficients count. This ``shadowing'' can be seen as an
-instance of \emph{decategorification}. In his seminal paper \emph{Une
-  th{\'e}orie combinatoire de s{\'e}ries formelles}
-\cite{J:combinatorial.species}, Joyal defines a combinatorial species to be a
-functor $A$ from the groupoid of finite sets and bijections to the category of
-sets, assigning every set $\underline{n}$ a set $A_n$ isovariantly. One
-associates a series to a combinatorial species by taking the cardinality of the
-$A_n$ and from there derive a generating function. But one can proceed in
-another way by first making a \emph{generating functor}\footnote{In truth, one
-  derives what is known as an \emph{analtyic} functor from this operation, and
-  not a polynomial functor. This is because one must also quotient by the action
-  of the symmetric groups on $A_n$. This difficulty is rectified when passing to
-  homotopy types, where analytic functors are polynomial due to the better
-  behavior of homotopy colimits.}
- $$X \mapsto \sum_{n \in \Nb} A_n \times X^n$$
-from the category of sets to itself, and then taking the action of this functor
-on cardinalities.
-
-Such functors $\Set \to \Set$ are sums of representable functors, and are
-therefore examples of \emph{polynomial functors}. Polynomial functors are well
-studied objects with a beautiful theory. They are important in computer science
-for the study of data types (cite), as a way of describing operads (cite), and
-for the development of opetopic approaches to higher categories (cite). The
-class of polynomial functors can be described in a number of equivalent ways:
-\begin{thm}[cite something]
-  Let $P : \Set \to \Set$ be a functor. Then the following are equivalent:
-  \begin{enumerate}
-  \item $P$ is polynomial.
-  \item $P$ is a sum of representables.
-  \item $P$ is accessible and preserves connected limits.
-  \item There is a bundle $\pi : E \to B$ of sets, and $P$ is the composite
-    $$\Set \xto{E^{\ast}} \Set_{/E} \xto{\pi_{!}} \Set_{/B} \xto{B_{\ast}}.$$
-  \item $P$ is a local right adjoint.
-  \end{enumerate}
-\end{thm}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Second Intro
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 A polynomial functor $P : \Set \to \Set$ is a sum of representables
 $$P(X) := \sum_{b \in B} X^{E_b}$$
 and therefore depends on a $B$-indexed family of sets $E_b$. This data is known
@@ -86,7 +29,7 @@ represented in terms of their associated bundles. A natural transformation $P
 \[
 \left( f : B \to B',\, f^{\sharp} : \dprod{b : B} E'_{fb} \to E_b \right)
 \]
-(using depented type syntax) acting covariantly on rows and contravariantly on
+(using dependent type syntax) acting covariantly on rows and contravariantly on
 boxes in each row. In terms of bundles, this is a diagram of the following sort:
 
 \[
