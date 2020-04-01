@@ -18,6 +18,18 @@
 
 \graphicspath{graphics/}
 
+%% For 2-cells in tikzcd
+\newcounter{nodemaker}
+\setcounter{nodemaker}{0}
+\def\twocell#1{%
+  \global\edef\mynodeone{twocell\arabic{nodemaker}}%
+  \stepcounter{nodemaker}%
+  \global\edef\mynodetwo{twocell\arabic{nodemaker}}%
+  \stepcounter{nodemaker}%
+  \ar[#1,phantom,shift left=3,""{name=\mynodeone}]%
+  \ar[#1,phantom,shift right=3,""'{name=\mynodetwo}]%
+  \ar[Rightarrow,from=\mynodeone,to=\mynodetwo]%
+}
 %%% Mathcal
 \DeclareMathOperator{\Aa}{\mathcal{A}}
 \DeclareMathOperator{\Ba}{\mathcal{B}}
@@ -95,7 +107,9 @@
 \DeclareMathOperator{\colim}{\mathsf{colim}}
 \DeclareMathOperator{\End}{\mathsf{End}}
 \DeclareMathOperator{\Dir}{\type{Dir}}
+\DeclareMathOperator{\Poly}{\type{Poly}}
 \DeclareMathOperator{\Fun}{\type{Fun}}
+\DeclareMathOperator{\ext}{\term{ext}}
 \DeclareMathOperator{\DirSeries}{\type{DirSeries}}
 
 %%% Operators -- Type Theory
