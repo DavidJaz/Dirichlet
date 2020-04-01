@@ -359,6 +359,9 @@ Now, we note that every set $S$ is the colimit of the diagram $S^{\triangleleft}
 \]
 Since, by Lemma \ref{lem:bang.preserves.connected.colimits}, $!_{(-)}$
 preserves connected colimits, {\color{red} TODO}.
+
+Finally, we note that the set $\Set^{\downarrow}(!_X, \pi)$ is naturally
+isomorphic to the set $\sum_{b \in B} E_b^X$.
 \end{proof}
 
 Now we are ready to intrinsically characterize the Dirichlet functors.
@@ -391,12 +394,67 @@ Next, we turn to cartesian morphisms.
 \begin{prop}
 A natural transformation $\phi : D \to D'$ between Dirichlet functors is
 cartesian if and only if the induced bundle map $D!_0 \to D'!_0$ is a pullback.
+
+As a corllary, the equivalence $\Dir \simeq \Set^{\downarrow}$ restricts to an
+equivalence
+$$\Dir_{\ulcorner} \simeq \Set^{\downarrow}_{\ulcorner}$$
+between Dirichlet functors and cartesian natural transformations and bundles and
+pullback sqaures.
 \end{prop}
 \begin{proof}
-TODO
+We want to show that for any $f\colon D\to D'$ the square
+\begin{equation}\label{eqn.cart1}
+\begin{tikzcd}
+	D(1)\ar[r, "f_1"]\ar[d, "\pi"']&
+	D'(1)\ar[d, "\pi'"]\\
+	D(0)\ar[r, "f_0"']&
+	D'(0)
+\end{tikzcd}
+\end{equation}
+is a pullback in $\Set$ iff for all functions $g\colon X\to X'$, the naturality square
+\begin{equation}\label{eqn.cart2}
+\begin{tikzcd}
+  D(X')\ar[r, "f_{X'}"]\ar[d, "D(g)"']&
+  D'(X')\ar[d, "D'(g)"]\\
+  D(X)\ar[r, "f_X"']&
+  D'(X)
+\end{tikzcd}
+\end{equation}
+is a pullback in $\Set$. We will freely use the natural isomorphism
+$D(X)\cong\Set^{\downarrow}(!_X, D!_0)$ from
+\ref{prop:set.characterizing.extent}, which allows us to identify Diagram
+\ref{eqn.cart2} with
+\begin{equation}\label{eqn:cart3}
+\begin{tikzcd}
+ \Set^{\downarrow}(!_{X'}, D!_0)     \ar[r, "f_{!_0,\ast}"]\ar[d, "!_g^{\ast}"']& \Set^{\downarrow}(!_{X'}, D'!_0)
+  \ar[d, "!_{g}^{\ast}"]\\
+  \Set^{\downarrow}(!_{X}, D!_0)\ar[r, "f_{!_0, \ast}"']&
+ \Set^{\downarrow}(!_X, D'!_0) 
+\end{tikzcd}
+\end{equation}
+
+The square in Diagram \ref{eqn.cart1} is a
+special case of that in Diagram \ref{eqn.cart2}, namely for $g\coloneqq !_0$;
+this establishes the only-if direction. 
+
+To complete the proof, suppose that Diagram \ref{eqn.cart1} is a pullback, take an arbitrary $g\colon X\to X'$, and suppose given a commutative solid-arrow diagram as shown:
+\[
+\begin{tikzcd}[sep=small]
+  X\ar[rr, "g"]\ar[dd]\ar[rd]&&
+  X'\ar[dr]\ar[dd]\ar[dl, dotted]\\&
+  D(1)\ar[rr, crossing over]&&
+  D'(1)\ar[dd]\\
+  1\ar[dr]\ar[rr, equal]&&
+  1\ar[dr]\ar[dl, dotted]\\&
+  D(0)\ar[from=uu, crossing over]\ar[rr]&&
+  D'(0)
+\end{tikzcd}
+\]
+We can interpret the statement that Diagram \ref{eqn.cart3} is a pullback as
+saying that there are unique dotted arrows making the diagram commute. So, we need to show that if the front face is a pullback, then there are unique diagonal dotted arrows as shown, making the diagram commute. This follows quickly from the universal property of the pullback.
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{thm:set.poly.cart.equiv.dir.cart}
   There is an equivalence of categories
   $$\type{Poly}_{\ulcorner} \simeq \Dir_{\ulcorner}$$
   between the category of polynomial functors and cartesian transformations and
@@ -406,6 +464,17 @@ TODO
 \end{thm}
 \begin{proof}
 TODO
+\end{proof}
+
+\begin{cor}
+  Let $D$ be a Dirichlet functor. Then the category
+  $\Dir_{/_{\ulcorner} D}$
+  of Dirichlet functors with a cartesian map to $D$ is a topos.
+\end{cor}
+\begin{proof}
+By Theorem \ref{thm:set.poly.cart.equiv.dir.cart}, this category is equivalent
+to $\type{Poly}_{/_{\ulcorner} P}$ for a polynomial $P$. But this is a topos as
+observed in Remark 2.6.2 of \cite{GHK:Analytic.Monads}.
 \end{proof}
 
 \section{Dirichlet Functors on Homotopy Types} \label{sec:type.level}
@@ -514,6 +583,15 @@ category) $S$, we see that (4) is equivalent to (5).
 Now, we note that every set $S$ is the colimit of the diagram $S^{\triangleleft}
 \xto{\ast^{\triangleleft}} \xto{!_0} \Ha$. Since, by Lemma \ref{lem:bang.preserves.weakly.contractible.colimits}, $!_{(-)}$
 preserves weakly contractible colimits, {\color{red} TODO}.
+
+Finally, we calculate $\Ha^{\downarrow}(!_{\ast}, \pi)$ homotopy type-theoretically:
+\begin{align*}
+\Ha^{\downarrow}(!_{\ast}, \pi) &= \sum_{b : \ast \to B} \sum_{f : X \to E}
+                                  (\pi \circ f = b \circ !_X)\\
+                                &= \sum_{b : B} \sum_{f : X \to E} \prod_{x : X} (\pi (f x) = b) \\
+                                &= \sum_{b : B} \left( X \to \sum_{e : E} (\pi e = b) \right) \\
+                                  &\equiv \sum_{b : B}E_b^X.
+\end{align*}
 \end{proof}
 
 Now we are ready to intrinsically characterize the Dirichlet functors.
@@ -529,29 +607,38 @@ $$\Ha\op \xto{(B^{\ast})\op} (\Ha_{/B})\op \xto{[-, \pi]} \Ha_{/B}
 \xto{B_\ast} \Ha.$$
 As $(B^{\ast})\op$ is a right adjoint, it commutes with all limits, and as $[-,\pi]$
 is part of a multivariable adjunction, it also commutes with all limits.
-Finally, we note that $B_{\ast}$ commutes with connected limits.
+Finally, we note that $B_{\ast}$ commutes with weakly contractible limits by
+Lemma 2.2.7 of \cite{GHK:Analytic.Monads}.
 
-Now, we show that if $D$ commutes with connected limits, then the unit
+Now, we show that if $D$ commutes with weakly contractible limits, then the unit
 $D \to \ext_{D!_0}$ is an equivalence. By Prop
 \ref{prop:set.characterizing.extent}, 
   $$\ext_{D!_0}(S) = \lim(S^{\triangleleft} \xto{!^{\triangleleft}} \ast^{\triangleleft}
   \xto{D!_0} \Ha).$$
   
-Every set is the connected colimit of the diagram $S^{\triangleleft} \to
-\downarrow \xto{!_0} \Ha$, and therefore if $D$ preserves this limit, then
+Every homotopy type $S$ is the weakly contractible colimit of the diagram $S^{\triangleleft} \to
+\downarrow \xto{!_0} \Ha$ because it is the colimit of the diagram $S \to \ast
+\xto{\ast} \Ha$ and we are extending this diagram with an initial object (see
+Lemma \ref{lem:extending.diagram.with.initial.object.has.same.colimit}). Therefore if $D$ preserves this limit, then
 $D(S)$ is precisely the above limit $\ext_{D!_0}(S)$.
 \end{proof}
 
 Next, we turn to cartesian morphisms.
-\begin{prop}
+\begin{prop}\label{prop:type.dirichlet.cartesian.iff.bundle.cartesian}
 A natural transformation $\phi : D \to D'$ between Dirichlet functors is
 cartesian if and only if the induced bundle map $D!_0 \to D'!_0$ is a pullback.
+
+As a corllary, the equivalence $\Dir \simeq \Ha^{\downarrow}$ restricts to an
+equivalence
+$$\Dir_{\ulcorner} \simeq \Ha^{\downarrow}_{\ulcorner}$$
+between Dirichlet functors and cartesian natural transformations and bundles and
+pullback sqaures.
 \end{prop}
 \begin{proof}
 TODO
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{thm:type.poly.cart.equiv.dir.cart}
   There is an equivalence of $\infty$-categories
   $$\type{Poly}_{\ulcorner} \simeq \Dir_{\ulcorner}$$
   between the category of polynomial functors and cartesian transformations and
@@ -560,9 +647,23 @@ TODO
   $$(-)^N \mapsto N^{(-)}.$$
 \end{thm}
 \begin{proof}
-TODO
+This follows by composing the equivalence of $\Dir_{\ulcorner}$ with
+$\Ha^{\downarrow}$ from Prop
+\ref{prop:type.dirichlet.cartesian.iff.bundle.cartesian} with that of
+Proposition 2.4.13 of \cite{GHK:Analytic.Monads}, noting that
+$\Ha^{\downarrow}_{\ulcorner}$ is the category of $(\ast,\ast)$-polynomials. 
 \end{proof}
 
+\begin{cor}
+  Let $D$ be a Dirichlet functor. Then the $\infty$-category
+  $\Dir_{/_{\ulcorner} D}$
+  of Dirichlet functors with a cartesian map to $D$ is an $\infty$-topos.
+\end{cor}
+\begin{proof}
+By Theorem \ref{thm:type.poly.cart.equiv.dir.cart}, this $\infty$-category is equivalent
+to $\type{Poly}_{/_{\ulcorner} P}$ for a polynomial $P$. But this is an
+$\infty$-topos by Theorem 2.6.1 of \cite{GHK:Analytic.Monads}.
+\end{proof}
 
 \section{Ordinary Dirichlet Functors} \label{sec:ordinary.dirichlet.functors}
 
@@ -602,7 +703,7 @@ initial object.
 \end{proof}
 
 
-\begin{lem}
+\begin{lem}\label{lem:extending.diagram.with.initial.object.has.same.colimit}
 If $\Ca$ is an $\infty$-category with an initial object $0$, and $d : D \to
 \Ca^J$ a family of diagrams with colimit $\colim d : D \to \Ca$, then the family
 $D \xto{d} \Ca^J \xto{\epsilon} \Ca^{J^{\triangleleft}}$ has colimit $\colim d$.
