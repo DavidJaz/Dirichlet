@@ -424,7 +424,7 @@ is a pullback in $\Set$. We will freely use the natural isomorphism
 $D(X)\cong\Set^{\downarrow}(!_X, D!_0)$ from
 \ref{prop:set.characterizing.extent}, which allows us to identify Diagram
 \ref{eqn.cart2} with
-\begin{equation}\label{eqn:cart3}
+\begin{equation}\label{eqn.cart3}
 \begin{tikzcd}
  \Set^{\downarrow}(!_{X'}, D!_0)     \ar[r, "f_{!_0,\ast}"]\ar[d, "!_g^{\ast}"']& \Set^{\downarrow}(!_{X'}, D'!_0)
   \ar[d, "!_{g}^{\ast}"]\\
@@ -592,6 +592,8 @@ Finally, we calculate $\Ha^{\downarrow}(!_{\ast}, \pi)$ homotopy type-theoretica
                                 &= \sum_{b : B} \left( X \to \sum_{e : E} (\pi e = b) \right) \\
                                   &\equiv \sum_{b : B}E_b^X.
 \end{align*}
+{\color{red} But I need a better argument to show that this is a natural
+  equivalence of functors --- something involving cartesian fibrations etc etc etc}
 \end{proof}
 
 Now we are ready to intrinsically characterize the Dirichlet functors.
@@ -635,7 +637,59 @@ between Dirichlet functors and cartesian natural transformations and bundles and
 pullback sqaures.
 \end{prop}
 \begin{proof}
-TODO
+We want to show that for any $f\colon D\to D'$ the square
+\begin{equation}\label{eqn.type.cart1}
+\begin{tikzcd}
+	D(1)\ar[r, "f_1"]\ar[d, "\pi"']&
+	D'(1)\ar[d, "\pi'"]\\
+	D(0)\ar[r, "f_0"']&
+	D'(0)
+\end{tikzcd}
+\end{equation}
+is a pullback in $\Set$ iff for all functions $g\colon X\to X'$, the naturality square
+\begin{equation}\label{eqn.type.cart2}
+\begin{tikzcd}
+  D(X')\ar[r, "f_{X'}"]\ar[d, "D(g)"']&
+  D'(X')\ar[d, "D'(g)"]\\
+  D(X)\ar[r, "f_X"']&
+  D'(X)
+\end{tikzcd}
+\end{equation}
+is a pullback in $\Set$. We will freely use the natural isomorphism
+$D(X)\cong\Set^{\downarrow}(!_X, D!_0)$ from
+\ref{prop:set.characterizing.extent}, which allows us to identify Diagram
+\ref{eqn.type.cart2} with
+\begin{equation}\label{eqn.cart3}
+\begin{tikzcd}
+ \Set^{\downarrow}(!_{X'}, D!_0)     \ar[r, "f_{!_0,\ast}"]\ar[d, "!_g^{\ast}"']& \Set^{\downarrow}(!_{X'}, D'!_0)
+  \ar[d, "!_{g}^{\ast}"]\\
+  \Set^{\downarrow}(!_{X}, D!_0)\ar[r, "f_{!_0, \ast}"']&
+ \Set^{\downarrow}(!_X, D'!_0) 
+\end{tikzcd}
+\end{equation}
+
+The square in Diagram \ref{eqn.type.cart1} is a
+special case of that in Diagram \ref{eqn.type.cart2}, namely for $g\coloneqq !_0$;
+this establishes the only-if direction. 
+
+To complete the proof, suppose that Diagram \ref{eqn.type.cart1} is a pullback, take an arbitrary $g\colon X\to X'$, and suppose given a commutative solid-arrow diagram as shown:
+\[
+\begin{tikzcd}[sep=small]
+  X\ar[rr, "g"]\ar[dd]\ar[rd]&&
+  X'\ar[dr]\ar[dd]\ar[dl, dotted]\\&
+  D(1)\ar[rr, crossing over]&&
+  D'(1)\ar[dd]\\
+  1\ar[dr]\ar[rr, equal]&&
+  1\ar[dr]\ar[dl, dotted]\\&
+  D(0)\ar[from=uu, crossing over]\ar[rr]&&
+  D'(0)
+\end{tikzcd}
+\]
+We can interpret the statement that Diagram \ref{eqn.type.cart3} is a pullback as
+saying that there are unique dotted arrows making the diagram commute. So, we
+need to show that if the front face is a pullback, then there are unique
+diagonal dotted arrows as shown in the homotopy type-theoretical sense.
+{\color{red} TODO} 
 \end{proof}
 
 \begin{thm}\label{thm:type.poly.cart.equiv.dir.cart}
