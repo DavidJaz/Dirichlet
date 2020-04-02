@@ -1,16 +1,22 @@
 \usepackage{fullpage}
 \usepackage{fancyhdr}
 \usepackage{amsmath,amssymb,amsthm}
+\usepackage{xcolor}
 \usepackage{tikz}
 \usepackage{wrapfig} % For inserting graphics
 \usepackage{graphicx} % For inserting graphics
 \usepackage{tikz-cd}
-\usepackage[margin=1in]{geometry} % To shape the margins
+\usepackage[margin=1.3in]{geometry} % To shape the margins
 \usepackage[backend=biber]{biblatex}
 \usepackage{tipa} % For \textesh, the shape modality
 \usepackage{mathtools} % for pre-superscripts
 \usepackage{caption}
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
 \usepackage{thmtools, thm-restate} % for forward references
+
+\RequirePackage{hyperref}
+\hypersetup{colorlinks,linkcolor={blue!50!black},citecolor={red!50!black},urlcolor={blue!80!black}}
 
 \usetikzlibrary{decorations.pathreplacing} % for drawing coverings.
 
@@ -180,6 +186,11 @@
 \newcommand{\xto}[1]{\xrightarrow{#1}}
 \newcommand{\todot}{\xrightarrow{\bullet}}
 \newcommand{\pto}{\,\cdot\kern-.1em{\to}\,}
+
+
+%%% DIS
+\newcommand{\dis}[1]{{\color{blue} DIS says:\ #1}}
+\newcommand{\down}{\mathbin{\downarrow}}
 
 % xmapsto
 \makeatletter
