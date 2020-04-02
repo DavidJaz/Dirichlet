@@ -245,6 +245,13 @@ and functional equations on the objective level to future work.
 Before diving in to the theory of Dirichlet functors, let's first consider the
 category $\Set^{\downarrow}$ of bundles of sets.
 
+\begin{defn}
+  We let $\downarrow$ be the walking arrow --- the category $\term{dom} \to
+  \term{cod}$ consisting of a single morphism. We denote by $\sigma : \downarrow
+  \to \downarrow\op$ the self-dualizing isomorphism of $\downarrow$, and note
+  that $\sigma\inv = \sigma\op$.
+\end{defn}
+
 \begin{prop}
   There is an adjoint quintuple:
   \[
@@ -721,8 +728,74 @@ $\infty$-topos by Theorem 2.6.1 of \cite{GHK:Analytic.Monads}.
 
 \section{Ordinary Dirichlet Functors} \label{sec:ordinary.dirichlet.functors}
 
+In this section, we will categorify Dirichlet series
+$$\sum_{n \in \Nb} a_n n^{-s}.$$
 
+First, we review the notion of \emph{homotopy cardinality}.
 
+\begin{defn}
+Let $B$ be a homotopy type. We define the \emph{homotopy cardinality} $#B$ to be
+the following sum:
+$$#B := \sum_{[b] \in \pi_0(B)} \prod_{n = 1}^{\infty} |\pi_n(B, b)|^{(-1)^n}$$
+
+We note that
+$$#B = \sum_{[b] \in \pi_0(B)} \frac{1}{#\Omega(B, b)}$$
+\end{defn}
+
+We will leave questions concerning the convergence and well-definedness of the
+homotopy cardinality of a type, noting only that if a type $B$ is totally finite in
+that it has finitely many connected components, its homotopy groups are finite,
+and they eventually vanish, then $#B$ is a finite sum of a finite product and so
+is well defined.
+
+The main lemma concerning homotopy cardinality is its behavior with respect to
+fibrations.
+\begin{lem}
+Let $\pi : E \to B$ be a map of homotopy types, and let $E_b$ denote the fiber
+over $b : B$. Then
+$$#E = \sum_{[b] \in \pi_0(B)}\frac{#E_b}{#\Omega(B, b)}.$$
+As a corollary:
+\begin{enumerate}
+\item $#(A \times B) = #A \cdot #B$ and so $#(B^n) = (#B)^n$.
+\item If $B$ is pointed and connected and $F$ is the fiber of $\pi$ over the
+  basepoint, then $#E = #F \cdot #B$.
+\item If $A_n$ is a family of types for $n : \Nb$, then $#(\sum_n A_n) = \sum_n #A_n$.
+\end{enumerate}
+\end{lem}
+\begin{proof}
+  We note that by the long exact sequence of homotopy groups, we have that
+  $$|\pi_n(E, e)| = |\pi_n(E_{\pi e}, e)|\cdot |\pi_n(B, \pi e)|$$
+  Therefore, we may calculate
+  \begin{align*}
+    #E &= \sum_{[e] \in \pi_0(E)}\prod_{n=1}^{\infty} |\pi_n(E, e)|^{(-1)^n}\\
+    &= \sum_{[b] \in \pi_0(B)} \sum_{[e] \in \pi_0(E_b)} \prod_{n=1}^{\infty} (|\pi_n(E_{b}, e)|\cdot |\pi_n(B, b)|)^{(-1)^n}\\
+    &= \sum_{[b] \in \pi_0(B)}\prod_{n=1}^{\infty} |\pi_n(B, b)|^{(-1)^n} \sum_{[e] \in \pi_0(E_b)} \prod_{n=1}^{\infty} |\pi_n(E_{b}, e)|^{(-1)^n}\\
+    &= \sum_{[b] \in \pi_0(B)}\frac{#E_b}{\frac{#\Omega(B, b)}}.
+  \end{align*}
+  
+  We may then take various maps $\pi : E \to B$ to recover the corollaries:
+  \begin{enumerate}
+  \item Take the projection $A \times B \to B$.
+  \item Take the map $\pi : E \to B$, noting that if $B$ is pointed connected then $#B =
+    \frac{1}{\Omega B}$.
+  \item Take the projection $\sum_n A_n \to \Nb$.
+  \end{enumerate}
+\end{proof}
+
+Now, we note that if $B$ is connected, then $#B = \frac{1}{#\Omega(B, b)}$ for
+any point $b : B$. Therefore, if $B$ is connected with finite homs of
+cardinality $n$, then $#B = \frac{1}{n}$ and so $#(B^s) = n^{-s}$. This is the
+observation --- originally due to Baez and Dolan in \emph{This Weeks Finds}
+(cite) --- that we will use to categorify Dirichlet series.
+
+\begin{defn}
+A homotopy type $B$ is \emph{locally finite and connected}, or \emph{lfc}, if it
+is $0$-connected and its homs are finite.
+
+We denote by $\type{lfc}$ the homotopy type of lfc types, and note that the
+bundle $\fst : \type{lfc}_{\ast} \to \type{lfc}$ forgetting the point of a
+pointed lfc type classifies maps with lfc fibers.
+\end{defn}
 
 
 
