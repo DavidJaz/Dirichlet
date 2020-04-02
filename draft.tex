@@ -1,8 +1,11 @@
 
+\section{Introduction}
 A polynomial functor $P : \Set \to \Set$ is a sum of representables
-$$P(X) := \sum_{b \in B} X^{E_b}$$
-and therefore depends on a $B$-indexed family of sets $E_b$. This data is known
-in the computer science literature as a ``container'', but as such an indexed
+\begin{equation}\label{eqn.poly}
+P(X) := \sum_{b \in B} X^{E_b}
+\end{equation}
+and therefore depends on a family of sets $E_b$ depending on $b\in B$. This data is known
+in the computer science literature as a ``container'', but since such an indexed
 family of sets can be represented by as a function
 \[
   \begin{tikzcd}
@@ -18,20 +21,20 @@ Young diagram:
 \]
 
 $B$ is the set of rows and $E_b$ is the set of boxes in row $b$ (possibly empty,
-for generalities sake). We can see the polynomial functor
-$$P(X) := \sum_{b \in B} X^{E_b}$$
+for generalities sake). We can see the polynomial functor \eqref{eqn.poly}
 as sending a set $X$ to the set of ways to label a row of the correponding Young
 diagram with elements of $X$.
 
 Remarkably, all natural transformations between polynomial functors can be
 represented in terms of their associated bundles. A natural transformation $P
-\to P'$ corresponds to a pair of functions
+\to P'$ corresponds to a pair of functions%
+\footnote{We use dependent type syntax, in particular Idris$^?$.}
 \[
 \left( f : B \to B',\, f^{\sharp} : \dprod{b : B} E'_{fb} \to E_b \right)
 \]
-(using dependent type syntax) acting covariantly on rows and contravariantly on
-boxes in each row. In terms of bundles, this is a diagram of the following sort:
-
+noting that $f$ acts covariantly on \dis{columns, right?} and $f^\sharp$ acts contravariantly on
+boxes in each row. We refer to these special spans as \dis{can we say \emph{bivariant?}} \emph{contravariant} morphisms of bundles.
+In terms of bundles, this is a diagram of the following sort:
 \[
   \begin{tikzcd}
     E \arrow[d, "\pi"'] \arrow[r, leftarrow, "f_{\sharp}"] & \bullet \arrow[d] \arrow[r]
@@ -39,7 +42,6 @@ boxes in each row. In terms of bundles, this is a diagram of the following sort:
     B \arrow[r, equals] & B \arrow[r, "f"'] & B'
   \end{tikzcd}
 \]
-We refer to these special spans as \emph{contravariant} morphisms of bundles.
 
 \begin{thm}[cite]
 The category of polynomial functors and natural transformations is equivalent to
@@ -47,15 +49,17 @@ the category of bundles and contravariant morphisms.
 \end{thm}
 
 This begs the question: what, then, are we to make of the more obvious,
-\emph{covariant} morphisms of bundles
+\emph{\dis{univariant?}} morphisms of bundles
 \[
-  \begin{tikzcd}
+  \begin{tikzcd}[column sep=large]
 E \arrow[r, "\term{tot}(f_{\sharp})"] \arrow[d, "\pi"'] & E' \arrow[d, "\pi'"] \\
 B \arrow[r, "f"']                                       & B'                  
 \end{tikzcd}
 \]
-which, in terms of Young diagrams, are covariant on both the rows and the boxes
+for which $f$ is covariant in the rows and $f_\sharp$ is again covariant
 in each row.
+%which, in terms of Young diagrams, are covariant on both the rows and the boxes
+%in each row?
 
 It turns out that these covariant maps of bundles correspond to natural
 transformations between the appropriate sums of \emph{contravariant}
@@ -64,28 +68,26 @@ $$D(X) := \sum_{b \in B} E_b^X$$
 In terms of Young diagrams, such a functor takes a set $X$ to the set of ways to
 place the elements of $X$ in the boxes of a row.
 
-Polynomial functors get their name because when $B$ and $E$ are finite, one may
-organize the exponents $E_b$ by cardinality, yielding a function
-$\term{card}E_{(-)} : B \to \Nb$. Letting $B_n := (\term{card}E_{(-)})\inv(n)$,
-we find that the cardinality
+Polynomial functors as in \eqref{eqn.poly} get their name from the case in which $B$ and $E$ are finite sets. Consider the function $\term{card}~E_{(-)} : B \to \Nb$, which takes the cardinality of each column $E_b$. Letting $B_n := (\term{card}E_{(-)})\inv(n)$, i.e.\ $B_n$ is the set of columns with $n$ elements,
+we find that the for any set $X$, the cardinality
 $$|P(X)| = \sum_{n \in \Nb} |B_n||X|^n$$
 is a polynomial in the cardinality of $X$. Similarly,
 $$|D(X)| = \sum_{n \in \Nb} |B_n|n^{|X|}$$
-resembles a Dirichlet series in the cardinality of $X$. Accoringly, we call such
-sums of contravariant representables \emph{Dirichlet functors}.
+resembles a Dirichlet series in the cardinality of $X$. Accordingly, we call such
+sums of contravariant representables \emph{Dirichlet functors}. Readers who prefer more traditional algebraic notation can see \cite{SpivakMyers}, which was the set-theoretic inspiration for the present paper.\dis{Agree? Maybe there's a better place to put this?}
 
 We will show in this paper that Dirichlet functors are, quite robustly, the
-contravariant analogue of polynomial functors. In particular, the many ways to
+contravariant analogue of polynomial functors. In particular, the many equivalent ways to
 say that a functor is polynomial have contravariant analogues.
 \begin{thm}[cite]\label{thm:polynomial.set.characterization}
   Let $P : \Set \to \Set$ be a functor. Then the following are equivalent.
   \begin{enumerate}
   \item $P$ is polynomial.
-  \item $P$ is the sum of representables.
+  \item $P$ is the sum of covariant representables.
   \item There is a bundle $\pi : E \to B$ together with a natural isomorphism
     $$P(X) \cong \sum_{b \in B} X^{E_b}.$$
     Or, equivalently, a natural isomorphism of $P$ with the composite
-    $$\Set \xto{E^{\ast}} \Set_{/E} \xto{\pi_!} \Set_{/B} \xto{B_\ast} \Set.$$
+    $$\Set \xto{\dis{\Delta_{!_E}}} \Set_{/E} \xto{\dis{\Pi_\pi}} \Set_{/B} \xto{\dis{\Sigma_{!_B}}} \Set.$$
   \item $P$ is accessible and preserves connected limits.
   \end{enumerate}
 \end{thm}
@@ -100,40 +102,40 @@ equivalent.
 \item There is a bundle $\pi : E \to B$ together with a natural isomorphism
   $$D(X) \cong \sum_{b \in B} E_b^X.$$
   Or, equivalently, a natural isomorphism of $D$ with the composite
-  $$\Set\op \xto{(B^{\ast})\op} (\Set_{/B})\op \xto{[-, \pi]} \Set_{/B}
-  \xto{B_{\ast}} \Set.$$
+  $$\Set\op \xto{(\Delta_{!_B})\op} (\Set_{/B})\op \xto{[-, \pi]} \Set_{/B}
+  \xto{\Sigma_{!_B}} \Set.$$
 \item $D$ preserves connected limits.
 \end{enumerate}
 \end{thm}
 
 Note that we no longer need to assume accessiblity. This is a general feature of
-the theory of Dirichlet functors; it is a bit ``smaller'' and more maneageable
+the theory of Dirichlet functors; it is a bit ``smaller'' and more manageable
 than that of polynomials. In particular, a Dirichlet functor is determined by
-its action on the terminal morphism $!_0 : 0 \to \ast$ of the empty set. As a corollary, Dirichlet functors form a topos.
+its action on the terminal morphism $!_0 : 0 \to \ast$ of the empty set \dis{also the terminal twisted arrow; any relation to GHK?}. As a corollary, Dirichlet functors form a topos.
 
 \begin{thm}\label{thm:dirichlet.set.equivalence}
-The functor $\Set^{\downarrow} \to \type{Fun}(\Set\op, \Set)$ sending $\pi : E
-\to B$ to the induced Dirichlet functor $X \mapsto \sum_{b \in B} E_b^X$ is
+The functor $\Set^{\down} \to \type{Fun}(\Set\op, \Set)$, given by sending $\pi : E
+\to B$ to the induced Dirichlet functor $X \mapsto \sum_{b \in B} E_b^X$, is
 fully faithful, and so gives an equivalence
-$$\Set^{\downarrow} \simeq \Dir$$
-between bundles and Dirichlet functors, with inverse given by evalutation at
+$$\Set^{\down} \simeq \Dir$$
+between the topos of bundles and the category of Dirichlet functors, with inverse given by evalutation at
 $!_0 : 0 \to \ast$.
 \end{thm}
 
 
 Now, object-wise, a Dirichlet functor and a polynomial functor are determined by
 the same data --- a bundle $\pi : E \to B$ of sets. Accordingly, one would
-expect a transformation
+expect for any set $N$ a transformation
 $$X^N \mapsto N^X$$
 turning polynomial functors into Dirichlet functors, and vice versa. But the
 natural transformations between each sort of functor induce different morphisms
-between the bundles; natural tranformations between polynomial functors induce
+between the bundles; natural transformations between polynomial functors induce
 contravariant bundle morphisms, while natural transformations between Dirichlet
 functors induce covariant bundle morphisms. However, if we restrict to those
 morphisms of bundles which are \emph{isovariant} on the fibers --- that is, the
 pullback diagrams of the form
 \[
-  \begin{tikzcd}
+  \begin{tikzcd}[column sep=large]
 E \arrow[r, "\term{tot}(f_{\sharp})"] \arrow[d, "\pi"'] \arrow[dr, phantom,
 "\ulcorner" very near start] & E' \arrow[d, "\pi'"] \\
 B \arrow[r, "f"']                                       & B'                  
@@ -148,7 +150,7 @@ squares are pullbacks. This is true as well for Dirichlet functors.
 A natural transformation $D \to D'$ of Dirichlet functors is Cartesian if and
 only if the corresponding bundle map
 \[
-  \begin{tikzcd}
+  \begin{tikzcd}[column sep=large]
 E \arrow[r, "\term{tot}(f_{\sharp})"] \arrow[d, "\pi"'] \arrow[dr, phantom,
 "\ulcorner" very near start] & E' \arrow[d, "\pi'"] \\
 B \arrow[r, "f"']                                       & B'                  
@@ -167,7 +169,7 @@ Polynomial functors play another very important role: they are \emph{generating
 identification
 $$P(X) \cong \sum_{n \in \Nb} C_n \times X^n/n!$$
 for sets $C_n$ on which the symmetric groups $\Aut(\underline{n})$ act freely
-(for \emph{finitary} $P$, commuting with filtered colimits).
+(for \emph{finitary} functors $P$, i.e.\ those that commute with filtered colimits).
 The generating functors for general combinatorial species --- the \emph{analytic
 functors} --- are not in general polynomial due to a loss of information when
 quotienting out by the action of the symmetric groups. This can be fixed by
@@ -183,15 +185,15 @@ $$\sum_{n \in \Nb} a_n n^{-s}.$$
 In \emph{$\infty$-Operads as Analytic Monads} \cite{GHK:Analytic.Monads},
 Gepner, Haugseng, and Kock take this approach and develop the theory of
 polynomial functors on homotopy types. In this setting, being analytic is a
-property of a polynomial functors, and is equivalent to admitting a cartesian
+property of \dis{some?} polynomial functors, and is equivalent to admitting a cartesian
 map to the functor $\type{Sym}$ given by
-$$X \mapsto \sum_{n : \Nb} X^n \sslash n!$$
+$$\type{Sym}X := \sum_{n : \Nb} X^n \sslash n!$$
+\dis{This is the homotopy quotient?}
 
-GHK prove $\infty$-categorical analogues of the above Theorem
+Let $\Ha$ be the $\infty$-category of homotopy types. GHK prove $\infty$-categorical analogues of the above Theorem
 \ref{thm:polynomial.set.characterization}.
 \begin{thm}[\cite{GHK:Analytic.Monads}]\label{thm:polynomial.type.characterization}
-Let $P : \Ha \to \Ha$ be a functor on the $\infty$-category of homotopy types.
-Then the following are equivalent:
+For any functor $P : \Ha \to \Ha$, the following are equivalent:
   \begin{enumerate}
   \item $P$ is polynomial.
   \item There is a bundle $\pi : E \to B$ of homotopy types together with a natural equivalence
@@ -202,18 +204,18 @@ Then the following are equivalent:
   \end{enumerate}
 \end{thm}
 
-Note that while this is a strong analogue, it is not a direct generalization:
-not all connected limits are weakly contractible.
+Note that while this is a strong analogue, it is not a direct generalization of \cref{thm:polynomial.set.characterization}:
+though it is true that in 1-categories all connected limits are weakly contractible, this is not true in general.
 
 In Section \ref{sec:type.level}, we will prove analogues of Theorems
 \ref{thm:dirichlet.set.characterization} and
-\ref{thm:dirichlet.set.equivalence}. In particular, we will prove the following.
+\ref{thm:dirichlet.set.equivalence}. \dis{What analogue of \ref{thm:dirichlet.set.equivalence} are we proving?} In particular, we will prove the following.
 
 \begin{thm}\label{thm:dirichlet.type.characterization}
-Let $D : \Set\op \to \Set$ be a contravariant functor. Then the following are
+Let $D : \Set\op \to \Set$ \dis{Do you mean $\Ha$ here?} be a contravariant functor. Then the following are
 equivalent.
 \begin{enumerate}
-\item $D$ is Dirichlet.
+\item $D$ is Dirichlet. \dis{In what sense?}
 \item There is a bundle $\pi : E \to B$ of homotopy types together with a natural equivalence
   $$D(X) \cong \sum_{b \in B} E_b^X.$$
   Or, equivalently, a natural equivalence of $D$ with the composite
@@ -231,7 +233,7 @@ In the last installment of his blog \emph{This Week's Finds} (cite), Baez (joint
 Dolan) presents a functor of groupoids categorifying the Riemann Zeta function.
 In later, unpublished work (cite), Baez and Dolan give an analogous
 categorification of Hasse-Weil Zeta functions. We will recall some facts about
-homotopy cardinality and construct these Zeda functors as ordinary Dirichlet
+homotopy cardinality and construct these Zeta functors as ordinary Dirichlet
 functors in our setting. We leave the investigation of Euler product formulas
 and functional equations on the objective level to future work.
 
@@ -243,7 +245,9 @@ and functional equations on the objective level to future work.
 \section{Dirichlet Functors on Sets} \label{sec:set.level}
 
 Before diving in to the theory of Dirichlet functors, let's first consider the
-category $\Set^{\downarrow}$ of bundles of sets.
+category $\Set^{\down}$ of bundles of sets and univariant bundle maps. For our
+proofs to go smoothly, we will need to explicitly keep track of the
+self-dualizing isomorphism $\downarrow \xto{\sim} \downarrow\op$ on the walking arrow.
 
 \begin{defn}
   We let $\downarrow$ be the walking arrow --- the category $\term{dom} \to
@@ -258,65 +262,86 @@ category $\Set^{\downarrow}$ of bundles of sets.
     \begin{tikzcd}
       \Set \arrow[r, "\const"] \arrow[r, leftarrow, shift left = 5,
       "\term{cod}"] \arrow[r, leftarrow, shift right = 5, "\term{dom}"]
-      \arrow[r, shift left = 10, "!^{(-)}"]  \arrow[r, shift right = 10, "!_{(-)}"] & \Set^{\downarrow}
+      \arrow[r, shift left = 10, "!^{(-)}"]  \arrow[r, shift right = 10, "!_{(-)}"] & \Set^{\down}
     \end{tikzcd}
   \]
-  All of the functors $\Set \to \Set^{\downarrow}$ are fully faithful.
+  All three functors $\Set \to \Set^{\down}$ are fully faithful.\dis{I had six; why leave one off?}
 \end{prop}
 \begin{proof}
 There is an adjoint triple $\begin{tikzcd} \ast \arrow[r,leftarrow] \arrow[r,
-  bend left] \arrow[r, bend right] & \downarrow \end{tikzcd}$. The middle three
-functors are given by restricting along this adjoint triple; the outer two are
+  bend left] \arrow[r, bend right] & \down \end{tikzcd}$. The middle three
+functors---$\term{cod}$, $\const$, and $\term{dom}$---are given by restricting along this adjoint triple; the outer two are
 given by Kan extending, or more concretely:
-  $$X \mapsto \begin{tikzcd} 0 \arrow[d, "!^X"] \\ X \end{tikzcd}$$
-  $$X \mapsto \begin{tikzcd} X \arrow[d, "!_X"] \\ \ast \end{tikzcd}$$
-It is easy to see that the unit $X \to \term{dom} !_{X}$ is an isomorphism (it is in
-fact an identity), so $!_{(-)}$ is fully faithful. Therefore, all the functors
-going from $\Set \to \Set^{\downarrow}$ are fully faithful.
+  \begin{equation}\label{eqn.bangbang}
+  X \mapsto \begin{tikzcd} 0 \arrow[d, "!^X"] \\ X \end{tikzcd}
+  \qquad\text{and}\qquad
+  X \mapsto \begin{tikzcd} X \arrow[d, "!_X"] \\ \ast \end{tikzcd}
+  \end{equation}
+\dis{Shouldn't the notation $!^X$ and $!_X$ be switched, so that $X$ is contravariant in $X\to \ast$ and covariant in $0\to X$? It also matches the side of the arrow that $X$ is on in \eqref{eqn.bangbang}.} It is easy to see that the unit $X \to \term{dom} !_{X}$ is an isomorphism (it is in
+fact an identity), so $!_{(-)}$ is fully faithful. Therefore, all three functors
+going from $\Set \to \Set^{\down}$ are fully faithful.
 \end{proof}
 
-We prove a quick fact we will use later.
+We prove a few quick facts we will use later.
 \begin{lem}\label{lem:bang.preserves.connected.colimits}
-  The functor $!_{(-)}$ preserves connected colimits.
+  The functor $!_{(-)}\colon\Set\to\Set^{\down}$ from \eqref{eqn.bangbang} preserves connected colimits.
 \end{lem}
 \begin{proof}
-  To see that $!_{(-)}$ preserves connected colimits, recall that colimits in $\Set^{\downarrow}$ are calculated pointwise. It remains to show, then, that the map
+  To see that $!_{(-)}$ preserves connected colimits, recall that colimits in $\Set^{\down}$ are calculated pointwise. It remains to show, then, that the map of bundles
   \[
     \begin{tikzcd}
     \colim S_i \arrow[r, equals] \arrow[d] & \colim S_i \arrow[d] \\
     \colim \ast \arrow[r] & \ast 
     \end{tikzcd}
   \]
-  is an isomorphism in $\Set^{\downarrow}$, for which it suffices to show that
-  $\colim \ast$ is terminal. But the colimit of the terminal diagram is the set
-  of connected components of its indexing diagram -- since we assumed the
-  indexing diagram was connected, this contains a single element.
+  is an isomorphism in $\Set^{\down}$, for which it suffices to show that
+  $\colim \ast$ is terminal. But the colimit of a diagram of terminal objects is the set
+  of connected components of its indexing category. Since we assumed the
+  indexing category was connected, this contains a single element.
 \end{proof}
 
-Now we will define the \emph{extent} of a bundle, the Dirichlet functor it
+\begin{lem}
+The Yoneda embedding $\yo : \downarrow\op \to \Set^{\downarrow}$ is equal to the
+composite $$\downarrow\op \xto{\sigma\op} \downarrow \xto{!_{0}} \Set
+\xto{!_{(-)}} \Set^{\downarrow}.$$
+
+As a corollary, any $\pi : \downarrow \to \Set$ equals the composite
+$$\downarrow \xto{\sigma} \downarrow\op \xto{!_0\op} \Set\op \xto{!_{(-)}\op}
+(\Set^{\downarow})\op \xto{\Set^{\downarrow}(-, \pi)} \Set$$
+by the Yoneda lemma.
+\end{lem}
+\begin{proof}
+One checks directly.
+\end{proof}
+
+Now we will define the \emph{extent} of a bundle $\pi$ to be the Dirichlet functor $\ext_\pi: \Set\to\Set$ that it
 corresponds to. This sends a bundle
 $\pi : E \to B$ to the functor
 $$X \mapsto \sum_{b \in B} E_b^X.$$
 We will, however, give a more abstract definition of the extent, and then
 calculate a number of presentations of it.
 
-\begin{defn}
-  The functor $!_0 : \downarrow \to \Set\op$ picking out the terminal morphism
-  $!_0 : 0 \to 1$ by precomposition an evaluation functor
-  $$\Set^{\downarrow} \xleftarrow{\ev_{!_0}} \Fun(\Set\op, \Set).$$
-  This functor admits a right adjoint by right Kan extension; we define the
-  \emph{Dirichlet extent} functor $\ext : \Set^{\downarrow} \to \Fun(\Set\op,
-  \Set)$ to be this right adjoint:
-  $$\ext_{\pi} :\equiv \term{ran}_{!_0} \pi.$$
+\begin{defn}\label{def.extent}
+  Consider the functor $!_0 : \down \to \Set\op$ picking out the unique morphism $1\to 0$ in $\Set\op$. Sending a functor $\Set\op\to\Set$ to its precomposition with $!_0$ gives an evaluation functor
+  $$\Set^{\down} \xleftarrow{\ev_{!_0}} \Fun(\Set\op, \Set).$$
+  \dis{I worry about the size of $\Fun(\Set\op,\Set)$.}\jaz{No need to worry,
+    you are extending functors with small domains along a functor with small
+    domains. Limits in any functor category (regardless of size) are calculated
+    pointwise, and we are taking small limits.} 
+  This functor admits a right adjoint by right Kan extension along $!_0\op \circ
+  \sigma : \downarrow \to \Set\op$; we define the
+  \emph{Dirichlet extent} functor $\ext : \Set^{\down} \to \Fun(\Set\op,
+  \Set)$ to be this right adjoint. It sends any bundle $\pi$ to
+  $$\ext_{\pi} :\equiv \term{ran}_{!_0\op \circ \sigma} \pi.$$
 \end{defn}
 
 \begin{prop}
   The functor $\ext$ is fully faithful, giving an equivalence
-  $$\Set^{\downarrow} \simeq \Dir$$
+  $$\Set^{\down} \simeq \Dir$$
   where $\Dir$ is the category of Dirichlet functors and natural transformations.
 \end{prop}
 \begin{proof}
-Since $!_0 : \downarrow \to \Set\op$ is fully faithful, the counit of the
+Since $!_0 : \down \to \Set\op$ is fully faithful, the counit of the
 $\ev_{!_0} \vdash \ext$ adjunction --- which is the universal cell defining the
 right Kan extension --- is an isomorphism. 
 \end{proof}
@@ -324,18 +349,29 @@ right Kan extension --- is an isomorphism.
 \begin{prop}\label{prop:set.characterizing.extent}
   Let $\pi : E \to B$ be a bundle. The following are equivalent:
   \begin{enumerate}
-  \item The extent $\ext_{\pi} : \Set\op \to \Set$ of $\pi$.
+  \item The extent $\ext_{\pi} : \Set\op \to \Set$ of $\pi$ from \cref{def.extent}.
   \item The functor
     $$S \mapsto \sum_{b \in B} E_b^S,$$
     or equivalently the composite
   $$\Set\op \xto{(B^{\ast})\op} (\Set_{/B})\op \xto{[-, \pi]} \Set_{/B}
   \xto{B_{\ast}} \Set.$$
+\item \dis{Add this?} The pullback functor sending a set $S$ to 
+\[
+\begin{tikzcd}
+	\ext_\pi(S)\ar[r]\ar[d]\arrow[dr, phantom,
+      "\ulcorner" very near start]&
+	B\ar[d]\\
+	\Set(S,E)\ar[r]&
+	\Set(S,B)
+\end{tikzcd}
+\]
 \item The restricted representable functor
-  $\Set^{\downarrow}(!_{(-)}, \pi)$.
+  $\Set^{\down}(!_{(-)}, \pi)$.
 \item The functor
-  $$S \mapsto \lim(\Hom_{\Set}(!_0, S) \to \downarrow \xto{\pi} \Set)$$
-  where $\Hom_{\Set}(!_0, S)$ is the slice category of $!_0 : \downarrow \to
-  \Set$ over $S$.
+  $$S \mapsto \lim(\Hom_{\Set}(!_0, S) \to \down \xto{\pi} \Set)$$
+  where $\Hom_{\Set}(!_0, S)$ is the slice category of $!_0 : \down \to
+  \Set$ over $S$.\dis{Is this Emily's notation for comma category?}\jaz{yes in
+    her Elements}
 \item The functor
   $$S \mapsto \lim(S^{\triangleleft} \xto{!^{\triangleleft}} \ast^{\triangleleft}
   \xto{\pi} \Set)$$
@@ -347,15 +383,15 @@ We have presented these results in order of most understandable to most
 computational; we will prove it a somewhat opposite order.
 
 First, we note that 
-$$S \mapsto \lim(\Hom_{\Set\op}(S, !_0) \to \downarrow \xto{\pi} \Set)$$
-is the standard right Kan extension formulat for $\ext_{\pi} \equiv
-\term{ran}_{!_0} \pi$. Noting that $\Hom_{\Set}(!_0, S) = \Hom_{\Set\op}(S,
+$$S \mapsto \lim(\Hom_{\Set\op}(S, !_0) \to \down \xto{\pi} \Set)$$
+is the standard right Kan extension formula for $\ext_{\pi} \equiv
+\term{ran}_{!_0} \pi$ as a conical limit. Noting that $\Hom_{\Set}(!_0, S) = \Hom_{\Set\op}(S,
 !_0)$, we see that (1) is equivalent to (4). Furthermore, noting that
 $\Hom_{\Set}(!_0, S)$ simply adjoins an initial object to (the discrete
 category) $S$, we see that (4) is equivalent to (5).
 
 Now, we note that every set $S$ is the colimit of the diagram $S^{\triangleleft}
-\xto{\ast^{\triangleleft}} \xto{!_0} \Set$, namely:
+\xto{\ast^{\triangleleft}}\down \xto{!_0} \Set$, namely:
 \[
 % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBoBGAXVJADcBDAGwFcYkRyQBfU9TXfIRTkK1Ok1btOPPtjwEiAZlE0GLNog7deIDHMFEALCvHqp22QIUoATCbWTNAHScBjKBBwIZu-vKHIdjZiDhogxBa++taBpMQhEmEAGtxiMFAA5vBEoABmAE4QALZIAKw0OBBIxD4FxWUVVYjktYUliOUglUg2rfUdjUiKfe1kXU0AbCNIIuNIUzp17XZziAt5bUODa1yUXEA
 \begin{tikzcd}
@@ -367,8 +403,8 @@ Now, we note that every set $S$ is the colimit of the diagram $S^{\triangleleft}
 Since, by Lemma \ref{lem:bang.preserves.connected.colimits}, $!_{(-)}$
 preserves connected colimits, {\color{red} TODO}.
 
-Finally, we note that the set $\Set^{\downarrow}(!_X, \pi)$ is naturally
-isomorphic to the set $\sum_{b \in B} E_b^X$.
+Finally, we note that the set $\Set^{\down}(!_X, \pi)$ is naturally
+isomorphic to the set $\sum_{b \in B} E_b^X$.\dis{add pullback?}
 \end{proof}
 
 Now we are ready to intrinsically characterize the Dirichlet functors.
@@ -392,8 +428,8 @@ $D \to \ext_{D!_0}$ is an isomorphism. By Prop
   $$\ext_{D!_0}(S) = \lim(S^{\triangleleft} \xto{!^{\triangleleft}} \ast^{\triangleleft}
   \xto{D!_0} \Set).$$
   
-Every set is the connected colimit of the diagram $S^{\triangleleft} \to
-\downarrow \xto{!_0} \Set$, and therefore if $D$ preserves this limit, then
+Every set $S$ is the connected colimit of the diagram $S^{\triangleleft} \to
+\down \xto{!_0} \Set$, and therefore if $D$ preserves this limit, then
 $D(S)$ is precisely the above limit $\ext_{D!_0}(S)$.
 \end{proof}
 
@@ -402,13 +438,16 @@ Next, we turn to cartesian morphisms.
 A natural transformation $\phi : D \to D'$ between Dirichlet functors is
 cartesian if and only if the induced bundle map $D!_0 \to D'!_0$ is a pullback.
 
-As a corllary, the equivalence $\Dir \simeq \Set^{\downarrow}$ restricts to an
+As a corllary, the equivalence $\Dir \simeq \Set^{\down}$ restricts to an
 equivalence
-$$\Dir_{\ulcorner} \simeq \Set^{\downarrow}_{\ulcorner}$$
-between Dirichlet functors and cartesian natural transformations and bundles and
-pullback sqaures.
+$$\Dir_{\ulcorner} \simeq \Set^{\down}_{\ulcorner}$$
+between Dirichlet functors with cartesian natural transformations and bundles with
+pullback squares.
 \end{prop}
 \begin{proof}
+\jaz{We could slickly do this using the fact that vertical maps are orthogonal
+  to horizontal maps.}
+  
 We want to show that for any $f\colon D\to D'$ the square
 \begin{equation}\label{eqn.cart1}
 \begin{tikzcd}
@@ -428,15 +467,15 @@ is a pullback in $\Set$ iff for all functions $g\colon X\to X'$, the naturality 
 \end{tikzcd}
 \end{equation}
 is a pullback in $\Set$. We will freely use the natural isomorphism
-$D(X)\cong\Set^{\downarrow}(!_X, D!_0)$ from
+$D(X)\cong\Set^{\down}(!_X, D!_0)$ from
 \ref{prop:set.characterizing.extent}, which allows us to identify Diagram
 \ref{eqn.cart2} with
 \begin{equation}\label{eqn.cart3}
 \begin{tikzcd}
- \Set^{\downarrow}(!_{X'}, D!_0)     \ar[r, "f_{!_0,\ast}"]\ar[d, "!_g^{\ast}"']& \Set^{\downarrow}(!_{X'}, D'!_0)
+ \Set^{\down}(!_{X'}, D!_0)     \ar[r, "f_{!_0,\ast}"]\ar[d, "!_g^{\ast}"']& \Set^{\down}(!_{X'}, D'!_0)
   \ar[d, "!_{g}^{\ast}"]\\
-  \Set^{\downarrow}(!_{X}, D!_0)\ar[r, "f_{!_0, \ast}"']&
- \Set^{\downarrow}(!_X, D'!_0) 
+  \Set^{\down}(!_{X}, D!_0)\ar[r, "f_{!_0, \ast}"']&
+ \Set^{\down}(!_X, D'!_0) 
 \end{tikzcd}
 \end{equation}
 
@@ -483,7 +522,61 @@ By Theorem \ref{thm:set.poly.cart.equiv.dir.cart}, this category is equivalent
 to $\type{Poly}_{/_{\ulcorner} P}$ for a polynomial $P$. But this is a topos as
 observed in Remark 2.6.2 of \cite{GHK:Analytic.Monads}.
 \end{proof}
+\dis{How does this topos compare to the topos $\Dir_{/D}$?}
+\jaz{The following story: it generalizes to $\infty$-categories, which is why
+  I'm writing it this way.}
 
+\begin{defn}
+A \emph{modality} on a category $\Ca$ is a stable orthogonal factorization
+system $(\La, \Ra)$. \jaz{see Anel Biederman Finster Joyal \cite{ABFJ:Blakers.Massey}}
+
+A modality is \emph{lex} if for any square
+\[
+  % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAEEQBfU9TXfIRRkAjFVqMWbAELdeIDNjwEiI8uPrNWiEAGE5fJYNWkx1TVJ0ARbuJhQA5vCKgAZgCcIAWyRkQOCCQAJnNJbRBXAwjPH0QQ-0DEAGZQrTYHKI9vX2oApDUQBjoAIxgGAAV+ZSEQdywHAAscEFTLEAbMmPzcxJSJNJ0AaxbCkrLKoxUdOsbmrgouIA
+\begin{tikzcd}
+A \arrow[r, "h"] \arrow[d, "g"'] & C \arrow[d, "f"] \\
+B \arrow[r, "k"']                & D               
+\end{tikzcd}
+\]
+where $f$ and $g$ are in $\La$ and $h$ and $k$ are in $\Ra$ is a pullback. (See
+Theorem 3.11 of \cite{RSS:Modalties.in.HoTT}, condition (vii).)
+
+
+We say that a modality $(\La, \Ra)$ is \emph{contained in} $(\La', \Ra')$ ---
+written $(\La, \Ra) \leq (\La', \Ra')$ --- if $\Ra \subseteq \Ra'$.
+\end{defn}
+
+\begin{prop}
+If $(\La, \Ra)$ is a modality on $\Ca$, then there is an induced modality $(\La_X,
+\Ra_X)$ on $\Ca_{/X}$ \jaz{I'll flesh this out in a bit, see
+  \cite{ABFJ:Blakers.Massey}}. If $(\La, \Ra)$ is lex, then so is $(\La_X, \Ra_X)$.
+\end{prop}
+
+\begin{prop}
+There is an equivalence between the order of lex modalities on a topos and the
+order of subtoposes.
+\end{prop}
+\begin{proof}
+Idea: we take those objects whose terminal morphism is in $\Ra$.
+\end{proof}
+
+\begin{prop}
+The orthogonal factorization system $(\term{vertical}, \term{cartesian})$ on
+$\Set^{\downarrow}$ (given by the cartesian fibration $\Set\op \to \Set$) is a
+lex modality.
+\end{prop}
+
+\begin{thm}
+The left exact modality $(\term{vertical}_D, \term{cartesian}_D)$ on
+$\Set^{\downarrow}_{/\pi}$ exhibits $\Set^{\downarrow}_{/_{\ulcorner} \pi}$ as a
+subtopos.
+
+As a corollary, we have a subtopos inclusion $\Dir_{/_{\ulcorner} D}
+\hookrightarrow \Dir_{/D}$. \jaz{So $\Dir_{/D}$ is equivalently a presheaf topos
+  $\Set^{\downarrow/D}$; what is the topology that presents $\Dir_{/_{\ulcorner}
+  D}$ as a sheaf topos?}
+\end{thm}
+  
 \section{Dirichlet Functors on Homotopy Types} \label{sec:type.level}
 
 \begin{prop}
@@ -492,22 +585,23 @@ observed in Remark 2.6.2 of \cite{GHK:Analytic.Monads}.
     \begin{tikzcd}
       \Ha \arrow[r, "\const"] \arrow[r, leftarrow, shift left = 5,
       "\term{cod}"] \arrow[r, leftarrow, shift right = 5, "\term{dom}"]
-      \arrow[r, shift left = 10, "!^{(-)}"]  \arrow[r, shift right = 10, "!_{(-)}"] & \Ha^{\downarrow}
+      \arrow[r, shift left = 10, "!^{(-)}"]  \arrow[r, shift right = 10, "!_{(-)}"] & \Ha^{\down}
     \end{tikzcd}
   \]
-  All of the functors $\Ha \to \Ha^{\downarrow}$ are fully faithful.
+  All three functors $\Ha \to \Ha^{\down}$ are fully faithful.
 \end{prop}
 \begin{proof}
 There is an adjoint triple $\begin{tikzcd} \ast \arrow[r,leftarrow] \arrow[r,
-  bend left] \arrow[r, bend right] & \downarrow \end{tikzcd}$. The middle three
+  bend left] \arrow[r, bend right] & \down \end{tikzcd}$. The middle three
 functors are given by restricting along this adjoint triple; the outer two are
 given by Kan extending. By Lemma \ref{lem:kan.extending.cone.adds.initial}, we
 may calculate these as
-  $$X \mapsto \begin{tikzcd} 0 \arrow[d, "!^X"] \\ X \end{tikzcd}$$
-  $$X \mapsto \begin{tikzcd} X \arrow[d, "!_X"] \\ \ast \end{tikzcd}$$
+  $$X \mapsto \begin{tikzcd} 0 \arrow[d, "!^X"] \\ X \end{tikzcd}
+  \qquad\text{and}\qquad
+  X \mapsto \begin{tikzcd} X \arrow[d, "!_X"] \\ \ast \end{tikzcd}$$
 It is easy to see that the unit $X \to \term{dom} !_{X}$ is an equivalence (it is in
 fact an identity), so $!_{(-)}$ is fully faithful. Therefore, all the functors
-going from $\Ha \to \Ha^{\downarrow}$ are fully faithful.
+going from $\Ha \to \Ha^{\down}$ are fully faithful.
 \end{proof}
 
 
@@ -515,14 +609,14 @@ going from $\Ha \to \Ha^{\downarrow}$ are fully faithful.
   The functor $!_{(-)}$ preserves weakly contractible colimits.
 \end{prop}
 \begin{proof}
-  To see that $!_{(-)}$ preserves weakly contractible colimits, recall that colimits in $H^{\downarrow}$ are calculated pointwise. It remains to show, then, that the map
+  To see that $!_{(-)}$ preserves weakly contractible colimits, recall that colimits in $H^{\down}$ are calculated pointwise. It remains to show, then, that the map
   \[
     \begin{tikzcd}
     \colim S_i \arrow[r, equals] \arrow[d] & \colim S_i \arrow[d] \\
     \colim \ast \arrow[r] & \ast 
     \end{tikzcd}
   \]
-  is an equivalence in $H^{\downarrow}$, for which it suffices to show that $\colim \ast$ is contractible. But the colimit of the terminal diagram is the (Kan-fibrant replacement of) its indexing simplicial set -- since we assumed the diagram was weakly contractible, $\colim \ast$ is contractible.
+  is an equivalence in $H^{\down}$, for which it suffices to show that $\colim \ast$ is contractible. But the colimit of the terminal diagram is the (Kan-fibrant replacement of) its indexing simplicial set -- since we assumed the diagram was weakly contractible, $\colim \ast$ is contractible.
 \end{proof}
 
 
@@ -534,22 +628,21 @@ We will, however, give a more abstract definition of the extent, and then
 calculate a number of presentations of it.
 
 \begin{defn}
-  The functor $!_0 : \downarrow \to \Ha\op$ picking out the terminal morphism
-  $!_0 : 0 \to 1$ by precomposition an evaluation functor
-  $$\Ha^{\downarrow} \xleftarrow{\ev_{!_0}} \Fun(\Ha\op, \Ha).$$
+Consider the functor $!_0 : \down \to \Ha\op$ picking out the unique morphism $1\to 0$ in $\Ha\op$. Sending a functor $\Ha\op\to\Ha$ to its precomposition with $!_0$ gives an evaluation functor
+  $$\Ha^{\down} \xleftarrow{\ev_{!_0}} \Fun(\Ha\op, \Ha).$$
   This functor admits a right adjoint by right Kan extension; we define the
-  \emph{Dirichlet extent} functor $\ext : \Ha^{\downarrow} \to \Fun(\Ha\op,
+  \emph{Dirichlet extent} functor $\ext : \Ha^{\down} \to \Fun(\Ha\op,
   \Ha)$ to be this right adjoint:
   $$\ext_{\pi} :\equiv \term{ran}_{!_0} \pi.$$
 \end{defn}
 
 \begin{prop}
-  The functor $\ext$ is fully faithful, giving an equivalence
-  $$\Ha^{\downarrow} \simeq \Dir$$
-  where $\Dir$ is the category of Dirichlet functors and natural transformations.
+  The functor $\ext$ is fully faithful, giving an equivalence 
+  $$\Ha^{\down} \simeq \Dir$$
+  where $\Dir$ is the category of Dirichlet functors and natural transformations.\dis{What is $\Dir$; have we defined Dirichlet functors in this context?}
 \end{prop}
 \begin{proof}
-Since $!_0 : \downarrow \to \Ha\op$ is fully faithful, the counit of the
+Since $!_0 : \down \to \Ha\op$ is fully faithful, the counit of the
 $\ev_{!_0} \vdash \ext$ adjunction --- which is the universal cell defining the
 right Kan extension --- is an equivalence by Proposition 9.4.4 of \cite{RV:Elements}. 
 \end{proof}
@@ -564,10 +657,10 @@ right Kan extension --- is an equivalence by Proposition 9.4.4 of \cite{RV:Eleme
   $$\Ha\op \xto{(B^{\ast})\op} (\Ha_{/B})\op \xto{[-, \pi]} \Ha_{/B}
   \xto{B_{\ast}} \Ha.$$
 \item The restricted representable functor
-  $\Ha^{\downarrow}(!_{(-)}, \pi)$.
+  $\Ha^{\down}(!_{(-)}, \pi)$.
 \item The functor
-  $$S \mapsto \lim(\Hom_{\Ha}(!_0, S) \to \downarrow \xto{\pi} \Ha)$$
-  where $\Hom_{\Ha}(!_0, S)$ is the slice category of $!_0 : \downarrow \to
+  $$S \mapsto \lim(\Hom_{\Ha}(!_0, S) \to \down \xto{\pi} \Ha)$$
+  where $\Hom_{\Ha}(!_0, S)$ is the slice category of $!_0 : \down \to
   \Ha$ over $S$.
 \item The functor
   $$S \mapsto \lim(S^{\triangleleft} \xto{!^{\triangleleft}} \ast^{\triangleleft}
@@ -580,7 +673,7 @@ We have presented these results in order of most understandable to most
 computational; we will prove it a somewhat opposite order.
 
 First, we note that 
-$$S \mapsto \lim(\Hom_{\Ha\op}(S, !_0) \to \downarrow \xto{\pi} \Ha)$$
+$$S \mapsto \lim(\Hom_{\Ha\op}(S, !_0) \to \down \xto{\pi} \Ha)$$
 is the right Kan extension formula for $\ext_{\pi} \equiv
 \term{ran}_{!_0} \pi$ --- see Corollary 9.5.3 of \cite{RV:Elements}. Noting that $\Hom_{\Ha}(!_0, S) = \Hom_{\Ha\op}(S,
 !_0)$, we see that (1) is equivalent to (4). Furthermore, noting that
@@ -591,9 +684,9 @@ Now, we note that every set $S$ is the colimit of the diagram $S^{\triangleleft}
 \xto{\ast^{\triangleleft}} \xto{!_0} \Ha$. Since, by Lemma \ref{lem:bang.preserves.weakly.contractible.colimits}, $!_{(-)}$
 preserves weakly contractible colimits, {\color{red} TODO}.
 
-Finally, we calculate $\Ha^{\downarrow}(!_{\ast}, \pi)$ homotopy type-theoretically:
+Finally, we calculate $\Ha^{\down}(!_{\ast}, \pi)$ homotopy type-theoretically:
 \begin{align*}
-\Ha^{\downarrow}(!_{\ast}, \pi) &= \sum_{b : \ast \to B} \sum_{f : X \to E}
+\Ha^{\down}(!_{\ast}, \pi) &= \sum_{b : \ast \to B} \sum_{f : X \to E}
                                   (\pi \circ f = b \circ !_X)\\
                                 &= \sum_{b : B} \sum_{f : X \to E} \prod_{x : X} (\pi (f x) = b) \\
                                 &= \sum_{b : B} \left( X \to \sum_{e : E} (\pi e = b) \right) \\
@@ -626,7 +719,7 @@ $D \to \ext_{D!_0}$ is an equivalence. By Prop
   \xto{D!_0} \Ha).$$
   
 Every homotopy type $S$ is the weakly contractible colimit of the diagram $S^{\triangleleft} \to
-\downarrow \xto{!_0} \Ha$ because it is the colimit of the diagram $S \to \ast
+\down \xto{!_0} \Ha$ because it is the colimit of the diagram $S \to \ast
 \xto{\ast} \Ha$ and we are extending this diagram with an initial object (see
 Lemma \ref{lem:extending.diagram.with.initial.object.has.same.colimit}). Therefore if $D$ preserves this limit, then
 $D(S)$ is precisely the above limit $\ext_{D!_0}(S)$.
@@ -637,9 +730,9 @@ Next, we turn to cartesian morphisms.
 A natural transformation $\phi : D \to D'$ between Dirichlet functors is
 cartesian if and only if the induced bundle map $D!_0 \to D'!_0$ is a pullback.
 
-As a corllary, the equivalence $\Dir \simeq \Ha^{\downarrow}$ restricts to an
+As a corllary, the equivalence $\Dir \simeq \Ha^{\down}$ restricts to an
 equivalence
-$$\Dir_{\ulcorner} \simeq \Ha^{\downarrow}_{\ulcorner}$$
+$$\Dir_{\ulcorner} \simeq \Ha^{\down}_{\ulcorner}$$
 between Dirichlet functors and cartesian natural transformations and bundles and
 pullback sqaures.
 \end{prop}
@@ -663,15 +756,15 @@ is a pullback in $\Set$ iff for all functions $g\colon X\to X'$, the naturality 
 \end{tikzcd}
 \end{equation}
 is a pullback in $\Set$. We will freely use the natural isomorphism
-$D(X)\cong\Set^{\downarrow}(!_X, D!_0)$ from
+$D(X)\cong\Set^{\down}(!_X, D!_0)$ from
 \ref{prop:set.characterizing.extent}, which allows us to identify Diagram
 \ref{eqn.type.cart2} with
 \begin{equation}\label{eqn.cart3}
 \begin{tikzcd}
- \Set^{\downarrow}(!_{X'}, D!_0)     \ar[r, "f_{!_0,\ast}"]\ar[d, "!_g^{\ast}"']& \Set^{\downarrow}(!_{X'}, D'!_0)
+ \Set^{\down}(!_{X'}, D!_0)     \ar[r, "f_{!_0,\ast}"]\ar[d, "!_g^{\ast}"']& \Set^{\down}(!_{X'}, D'!_0)
   \ar[d, "!_{g}^{\ast}"]\\
-  \Set^{\downarrow}(!_{X}, D!_0)\ar[r, "f_{!_0, \ast}"']&
- \Set^{\downarrow}(!_X, D'!_0) 
+  \Set^{\down}(!_{X}, D!_0)\ar[r, "f_{!_0, \ast}"']&
+ \Set^{\down}(!_X, D'!_0) 
 \end{tikzcd}
 \end{equation}
 
@@ -709,10 +802,10 @@ diagonal dotted arrows as shown in the homotopy type-theoretical sense.
 \end{thm}
 \begin{proof}
 This follows by composing the equivalence of $\Dir_{\ulcorner}$ with
-$\Ha^{\downarrow}$ from Prop
+$\Ha^{\down}$ from Prop
 \ref{prop:type.dirichlet.cartesian.iff.bundle.cartesian} with that of
 Proposition 2.4.13 of \cite{GHK:Analytic.Monads}, noting that
-$\Ha^{\downarrow}_{\ulcorner}$ is the category of $(\ast,\ast)$-polynomials. 
+$\Ha^{\down}_{\ulcorner}$ is the category of $(\ast,\ast)$-polynomials. 
 \end{proof}
 
 \begin{cor}
@@ -734,18 +827,18 @@ $$\sum_{n \in \Nb} a_n n^{-s}.$$
 First, we review the notion of \emph{homotopy cardinality}.
 
 \begin{defn}
-Let $B$ be a homotopy type. We define the \emph{homotopy cardinality} $#B$ to be
+Let $B$ be a homotopy type. We define the \emph{homotopy cardinality} $\#B$ to be
 the following sum:
-$$#B := \sum_{[b] \in \pi_0(B)} \prod_{n = 1}^{\infty} |\pi_n(B, b)|^{(-1)^n}$$
+$$\#B := \sum_{[b] \in \pi_0(B)} \prod_{n = 1}^{\infty} |\pi_n(B, b)|^{(-1)^n}$$
 
 We note that
-$$#B = \sum_{[b] \in \pi_0(B)} \frac{1}{#\Omega(B, b)}$$
+$$\#B = \sum_{[b] \in \pi_0(B)} \frac{1}{\#\Omega(B, b)}$$
 \end{defn}
 
 We will leave questions concerning the convergence and well-definedness of the
 homotopy cardinality of a type, noting only that if a type $B$ is totally finite in
 that it has finitely many connected components, its homotopy groups are finite,
-and they eventually vanish, then $#B$ is a finite sum of a finite product and so
+and they eventually vanish, then $\#B$ is a finite sum of a finite product and so
 is well defined.
 
 The main lemma concerning homotopy cardinality is its behavior with respect to
@@ -753,13 +846,13 @@ fibrations.
 \begin{lem}
 Let $\pi : E \to B$ be a map of homotopy types, and let $E_b$ denote the fiber
 over $b : B$. Then
-$$#E = \sum_{[b] \in \pi_0(B)}\frac{#E_b}{#\Omega(B, b)}.$$
+$$\#E = \sum_{[b] \in \pi_0(B)}\frac{\#E_b}{\#\Omega(B, b)}.$$
 As a corollary:
 \begin{enumerate}
-\item $#(A \times B) = #A \cdot #B$ and so $#(B^n) = (#B)^n$.
+\item $\#(A \times B) = \#A \cdot \#B$ and so $\#(B^n) = (\#B)^n$.
 \item If $B$ is pointed and connected and $F$ is the fiber of $\pi$ over the
-  basepoint, then $#E = #F \cdot #B$.
-\item If $A_n$ is a family of types for $n : \Nb$, then $#(\sum_n A_n) = \sum_n #A_n$.
+  basepoint, then $\#E = \#F \cdot \#B$.
+\item If $A_n$ is a family of types for $n : \Nb$, then $\#(\sum_n A_n) = \sum_n \#A_n$.
 \end{enumerate}
 \end{lem}
 \begin{proof}
@@ -767,24 +860,24 @@ As a corollary:
   $$|\pi_n(E, e)| = |\pi_n(E_{\pi e}, e)|\cdot |\pi_n(B, \pi e)|$$
   Therefore, we may calculate
   \begin{align*}
-    #E &= \sum_{[e] \in \pi_0(E)}\prod_{n=1}^{\infty} |\pi_n(E, e)|^{(-1)^n}\\
+    \#E &= \sum_{[e] \in \pi_0(E)}\prod_{n=1}^{\infty} |\pi_n(E, e)|^{(-1)^n}\\
     &= \sum_{[b] \in \pi_0(B)} \sum_{[e] \in \pi_0(E_b)} \prod_{n=1}^{\infty} (|\pi_n(E_{b}, e)|\cdot |\pi_n(B, b)|)^{(-1)^n}\\
     &= \sum_{[b] \in \pi_0(B)}\prod_{n=1}^{\infty} |\pi_n(B, b)|^{(-1)^n} \sum_{[e] \in \pi_0(E_b)} \prod_{n=1}^{\infty} |\pi_n(E_{b}, e)|^{(-1)^n}\\
-    &= \sum_{[b] \in \pi_0(B)}\frac{#E_b}{\frac{#\Omega(B, b)}}.
+    &= \sum_{[b] \in \pi_0(B)}\frac{\#E_b}{\#\Omega(B, b)}.
   \end{align*}
   
   We may then take various maps $\pi : E \to B$ to recover the corollaries:
   \begin{enumerate}
   \item Take the projection $A \times B \to B$.
-  \item Take the map $\pi : E \to B$, noting that if $B$ is pointed connected then $#B =
+  \item Take the map $\pi : E \to B$, noting that if $B$ is pointed connected then $\#B =
     \frac{1}{\Omega B}$.
   \item Take the projection $\sum_n A_n \to \Nb$.
   \end{enumerate}
 \end{proof}
 
-Now, we note that if $B$ is connected, then $#B = \frac{1}{#\Omega(B, b)}$ for
+Now, we note that if $B$ is connected, then $\#B = \frac{1}{\#\Omega(B, b)}$ for
 any point $b : B$. Therefore, if $B$ is connected with finite homs of
-cardinality $n$, then $#B = \frac{1}{n}$ and so $#(B^s) = n^{-s}$. This is the
+cardinality $n$, then $\#B = \frac{1}{n}$ and so $\#(B^s) = n^{-s}$. This is the
 observation --- originally due to Baez and Dolan in \emph{This Weeks Finds}
 (cite) --- that we will use to categorify Dirichlet series.
 
