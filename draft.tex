@@ -300,7 +300,7 @@ We prove a few quick facts we will use later.
   indexing category was connected, this contains a single element.
 \end{proof}
 
-\begin{lem}
+\begin{lem}\label{lem:set.bundle.yoneda}
 The Yoneda embedding $\yo : \downarrow\op \to \Set^{\downarrow}$ is equal to the
 composite $$\downarrow\op \xto{\sigma\op} \downarrow \xto{!_{0}} \Set
 \xto{!_{(-)}} \Set^{\downarrow}.$$
@@ -509,7 +509,8 @@ saying that there are unique dotted arrows making the diagram commute. So, we ne
   $$(-)^N \mapsto N^{(-)}.$$
 \end{thm}
 \begin{proof}
-TODO
+  \jaz{Need to find a good citation for this result --- that polynomial functors
+  and cartesian transforms are bundles and cartesian maps (for 1-cats).}
 \end{proof}
 
 \begin{cor}
@@ -523,59 +524,8 @@ to $\type{Poly}_{/_{\ulcorner} P}$ for a polynomial $P$. But this is a topos as
 observed in Remark 2.6.2 of \cite{GHK:Analytic.Monads}.
 \end{proof}
 \dis{How does this topos compare to the topos $\Dir_{/D}$?}
-\jaz{The following story: it generalizes to $\infty$-categories, which is why
-  I'm writing it this way.}
-
-\begin{defn}
-A \emph{modality} on a category $\Ca$ is a stable orthogonal factorization
-system $(\La, \Ra)$. \jaz{see Anel Biederman Finster Joyal \cite{ABFJ:Blakers.Massey}}
-
-A modality is \emph{lex} if for any square
-\[
-  % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAEEQBfU9TXfIRRkAjFVqMWbAELdeIDNjwEiI8uPrNWiEAGE5fJYNWkx1TVJ0ARbuJhQA5vCKgAZgCcIAWyRkQOCCQAJnNJbRBXAwjPH0QQ-0DEAGZQrTYHKI9vX2oApDUQBjoAIxgGAAV+ZSEQdywHAAscEFTLEAbMmPzcxJSJNJ0AaxbCkrLKoxUdOsbmrgouIA
-\begin{tikzcd}
-A \arrow[r, "h"] \arrow[d, "g"'] & C \arrow[d, "f"] \\
-B \arrow[r, "k"']                & D               
-\end{tikzcd}
-\]
-where $f$ and $g$ are in $\La$ and $h$ and $k$ are in $\Ra$ is a pullback. (See
-Theorem 3.11 of \cite{RSS:Modalties.in.HoTT}, condition (vii).)
-
-
-We say that a modality $(\La, \Ra)$ is \emph{contained in} $(\La', \Ra')$ ---
-written $(\La, \Ra) \leq (\La', \Ra')$ --- if $\Ra \subseteq \Ra'$.
-\end{defn}
-
-\begin{prop}
-If $(\La, \Ra)$ is a modality on $\Ca$, then there is an induced modality $(\La_X,
-\Ra_X)$ on $\Ca_{/X}$ \jaz{I'll flesh this out in a bit, see
-  \cite{ABFJ:Blakers.Massey}}. If $(\La, \Ra)$ is lex, then so is $(\La_X, \Ra_X)$.
-\end{prop}
-
-\begin{prop}
-There is an equivalence between the order of lex modalities on a topos and the
-order of subtoposes.
-\end{prop}
-\begin{proof}
-Idea: we take those objects whose terminal morphism is in $\Ra$.
-\end{proof}
-
-\begin{prop}
-The orthogonal factorization system $(\term{vertical}, \term{cartesian})$ on
-$\Set^{\downarrow}$ (given by the cartesian fibration $\Set\op \to \Set$) is a
-lex modality.
-\end{prop}
-
-\begin{thm}
-The left exact modality $(\term{vertical}_D, \term{cartesian}_D)$ on
-$\Set^{\downarrow}_{/\pi}$ exhibits $\Set^{\downarrow}_{/_{\ulcorner} \pi}$ as a
-subtopos.
-
-As a corollary, we have a subtopos inclusion $\Dir_{/_{\ulcorner} D}
-\hookrightarrow \Dir_{/D}$. \jaz{So $\Dir_{/D}$ is equivalently a presheaf topos
-  $\Set^{\downarrow/D}$; what is the topology that presents $\Dir_{/_{\ulcorner}
-  D}$ as a sheaf topos?}
-\end{thm}
+\jaz{See the $\infty$-categorical case. The same story can be told for
+  1-categories, but perhaps we should tell it some other way?}
   
 \section{Dirichlet Functors on Homotopy Types} \label{sec:type.level}
 
@@ -619,6 +569,20 @@ going from $\Ha \to \Ha^{\down}$ are fully faithful.
   is an equivalence in $H^{\down}$, for which it suffices to show that $\colim \ast$ is contractible. But the colimit of the terminal diagram is the (Kan-fibrant replacement of) its indexing simplicial set -- since we assumed the diagram was weakly contractible, $\colim \ast$ is contractible.
 \end{proof}
 
+\begin{lem}\label{lem:type.bundle.yoneda}
+The Yoneda embedding $\yo : \downarrow\op \to \Ha^{\downarrow}$ is equivalent to the
+composite $$\downarrow\op \xto{\sigma\op} \downarrow \xto{!_{0}} \Ha
+\xto{!_{(-)}} \Ha^{\downarrow}.$$
+
+As a corollary, for any $\pi : \downarrow \to \Ha$, $\down\op \xto{\sigma\op}
+\down \xto{\pi} \Ha$ equals the composite
+$$\down\op \xto{!_0\op} \Ha\op \xto{!_{(-)}\op}
+(\Ha^{\downarrow})\op \xto{\Ha^{\downarrow}(-, \pi)} \Ha$$
+by the Yoneda lemma.
+\end{lem}
+\begin{proof}
+  This follows from Lemma \ref{lem:set.bundle.yoneda}, since $\downarrow$ is a $1$-category.
+\end{proof}
 
 Now we will define the \emph{extent} of a bundle, the Dirichlet functor it
 corresponds to. This sends a bundle
@@ -656,14 +620,25 @@ right Kan extension --- is an equivalence by Proposition 9.4.4 of \cite{RV:Eleme
     or equivalently the composite
   $$\Ha\op \xto{(B^{\ast})\op} (\Ha_{/B})\op \xto{[-, \pi]} \Ha_{/B}
   \xto{B_{\ast}} \Ha.$$
+\item The pullback functor sending a set $S$ to 
+\[
+\begin{tikzcd}
+	\ext_\pi(S)\ar[r]\ar[d]\arrow[dr, phantom,
+      "\ulcorner" very near start]&
+	B\ar[d]\\
+	\Ha(S,E)\ar[r]&
+	\Ha(S,B)
+\end{tikzcd}
+\]
 \item The restricted representable functor
   $\Ha^{\down}(!_{(-)}, \pi)$.
 \item The functor
-  $$S \mapsto \lim(\Hom_{\Ha}(!_0, S) \to \down \xto{\pi} \Ha)$$
+  $$S \mapsto \lim(\Hom_{\Ha}(!_0, S)\op \to \down\op \xto{\sigma\op} \down \xto{\pi} \Ha)$$
   where $\Hom_{\Ha}(!_0, S)$ is the slice category of $!_0 : \down \to
   \Ha$ over $S$.
 \item The functor
-  $$S \mapsto \lim(S^{\triangleleft} \xto{!^{\triangleleft}} \ast^{\triangleleft}
+  $$S \mapsto \lim(( S^{\triangleleft} )\op \xto{( !^{\triangleleft} )\op}
+  (\ast^{\triangleleft})\op \xto{\sigma\op} \down
   \xto{\pi} \Ha)$$
   where $(-)^{\triangleleft}$ is the \emph{left cone}.
   \end{enumerate}
@@ -672,28 +647,37 @@ right Kan extension --- is an equivalence by Proposition 9.4.4 of \cite{RV:Eleme
 We have presented these results in order of most understandable to most
 computational; we will prove it a somewhat opposite order.
 
+
 First, we note that 
-$$S \mapsto \lim(\Hom_{\Ha\op}(S, !_0) \to \down \xto{\pi} \Ha)$$
+$$S \mapsto \lim(\Hom_{\Ha\op}(S, !_0\op \circ \sigma) \to \down \xto{\pi} \Ha)$$
 is the right Kan extension formula for $\ext_{\pi} \equiv
-\term{ran}_{!_0} \pi$ --- see Corollary 9.5.3 of \cite{RV:Elements}. Noting that $\Hom_{\Ha}(!_0, S) = \Hom_{\Ha\op}(S,
-!_0)$, we see that (1) is equivalent to (4). Furthermore, noting that
-$\Hom_{\Ha}(!_0, S)$ simply adjoins an initial object to (the discrete
-category) $S$, we see that (4) is equivalent to (5).
+\term{ran}_{!_0} \pi$ --- see Corollary 9.5.3 of \cite{RV:Elements}. Now,
+$\Hom_{\Ha\op}(S, !_0\op \circ \sigma) \simeq \Hom_{\Ha}(!_0 \circ \sigma\op,
+S)\op$ over $\down$, which we may see by noting that $(-)\op : {\infty}\Cat \to {\infty}\Cat^{\term{co}}$ is a cosmological equivalence and therefore preserves
+comma squares. Furthermore, we have the following equivalence:
+\[
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12AJCAWwH1gnLnQC+ACgCE-YgAJOAYywAnBfPbYA5rzqcIaUrIDKASj1oQo0uky58hFGQCMVWoxZthfQcLFSZhqbmltYgGNh4BERO5K70zKyIHOxQEADuhFY2EfbRpC7U8R5JnKkZwaKuMFCa8ESgAGbKfEhkIDgQSDEgDHQARjAMAAq2kQ4gyliaABY4IIXuicnYvCGNzauIbR1IAExZIE0tiLvUO4gAzAsJnhpTOmuHG11nnZeVokA
+\begin{tikzcd}
+{\Hom_{\Ha}(!_0 \circ \sigma\op, S)\op} \arrow[d, "\sim"'] \arrow[r] & \down \arrow[d, "\sigma"] \\
+{\Hom_{\Ha}(!_0, S)\op} \arrow[r]                                    & \down\op                 
+\end{tikzcd}
+\]
+and therefore we may equivalently calculate this limit as 
+$$\lim(\Hom_{\Ha}(!_0, S)\op \to \down\op \xto{\sigma\op} \down \xto{\pi} \Ha).$$
+This gives us the equivalence between (1) and (5). By Lemma
+\ref{lem:slice.cone.equiv}, we see also that (5) and (6) are equivalent.
 
-Now, we note that every set $S$ is the colimit of the diagram $S^{\triangleleft}
-\xto{\ast^{\triangleleft}} \xto{!_0} \Ha$. Since, by Lemma \ref{lem:bang.preserves.weakly.contractible.colimits}, $!_{(-)}$
-preserves weakly contractible colimits, {\color{red} TODO}.
+Now, using Lemmas \ref{lem:bang.preserves.weakly.contractible.colimits} and \ref{lem:type.bundle.yoneda}, we may make
+the following calculation identifying (4) with (6):
 
-Finally, we calculate $\Ha^{\down}(!_{\ast}, \pi)$ homotopy type-theoretically:
 \begin{align*}
-\Ha^{\down}(!_{\ast}, \pi) &= \sum_{b : \ast \to B} \sum_{f : X \to E}
-                                  (\pi \circ f = b \circ !_X)\\
-                                &= \sum_{b : B} \sum_{f : X \to E} \prod_{x : X} (\pi (f x) = b) \\
-                                &= \sum_{b : B} \left( X \to \sum_{e : E} (\pi e = b) \right) \\
-                                  &\equiv \sum_{b : B}E_b^X.
+  \Ha^{\down}(!_S, \pi) &= \Ha^{\down}(!_{\colim(S^{\triangleleft} \xto{!^{\triangleleft}} \ast^{\triangleleft} \xto{!_0} \Ha)}, \pi) \\
+  &\simeq \Ha^{\down}(\colim(S^{\triangleleft} \xto{!^{\triangleleft}} \ast^{\triangleleft} \xto{!_0} \Ha \xto{!_{(-)}} \Ha^{\down}), \pi)\\
+&\simeq \lim((S^{\down})\op \xto{(!^{\triangleleft})\op} (\ast^{\triangleleft})\op \xto{!_0\op} \Ha\op \xto{!_{(-)}} (\Ha^{\down})\op \xto{\Ha^{\down}(-, \pi)} \Ha) \\
+&\simeq \lim((S^{\down})\op \xto{(!^{\triangleleft})\op} (\ast^{\triangleleft})\op \xto{\sigma\op} \down \xto{\pi} \Ha).
 \end{align*}
-{\color{red} But I need a better argument to show that this is a natural
-  equivalence of functors --- something involving cartesian fibrations etc etc etc}
+
+\jaz{TODO: (3) with (4) and (2) and (4)}
 \end{proof}
 
 Now we are ready to intrinsically characterize the Dirichlet functors.
@@ -719,9 +703,7 @@ $D \to \ext_{D!_0}$ is an equivalence. By Prop
   \xto{D!_0} \Ha).$$
   
 Every homotopy type $S$ is the weakly contractible colimit of the diagram $S^{\triangleleft} \to
-\down \xto{!_0} \Ha$ because it is the colimit of the diagram $S \to \ast
-\xto{\ast} \Ha$ and we are extending this diagram with an initial object (see
-Lemma \ref{lem:extending.diagram.with.initial.object.has.same.colimit}). Therefore if $D$ preserves this limit, then
+\down \xto{!_0} \Ha$ by Lemma \ref{lem:every.type.weakly.contractible.colimit}. Therefore if $D$ preserves this limit, then
 $D(S)$ is precisely the above limit $\ext_{D!_0}(S)$.
 \end{proof}
 
@@ -755,41 +737,26 @@ is a pullback in $\Set$ iff for all functions $g\colon X\to X'$, the naturality 
   D'(X)
 \end{tikzcd}
 \end{equation}
-is a pullback in $\Set$. We will freely use the natural isomorphism
-$D(X)\cong\Set^{\down}(!_X, D!_0)$ from
+is a pullback in $\Ha$. We will freely use the natural isomorphism
+$D(X)\cong\Ha^{\down}(!_X, D!_0)$ from
 \ref{prop:set.characterizing.extent}, which allows us to identify Diagram
 \ref{eqn.type.cart2} with
-\begin{equation}\label{eqn.cart3}
+\begin{equation}\label{eqn.type.cart3}
 \begin{tikzcd}
- \Set^{\down}(!_{X'}, D!_0)     \ar[r, "f_{!_0,\ast}"]\ar[d, "!_g^{\ast}"']& \Set^{\down}(!_{X'}, D'!_0)
+ \Ha^{\down}(!_{X'}, D!_0)     \ar[r, "f_{!_0,\ast}"]\ar[d, "!_g^{\ast}"']& \Ha^{\down}(!_{X'}, D'!_0)
   \ar[d, "!_{g}^{\ast}"]\\
-  \Set^{\down}(!_{X}, D!_0)\ar[r, "f_{!_0, \ast}"']&
- \Set^{\down}(!_X, D'!_0) 
+  \Ha^{\down}(!_{X}, D!_0)\ar[r, "f_{!_0, \ast}"']&
+ \Ha^{\down}(!_X, D'!_0) 
 \end{tikzcd}
 \end{equation}
 
 The square in Diagram \ref{eqn.type.cart1} is a
 special case of that in Diagram \ref{eqn.type.cart2}, namely for $g\coloneqq !_0$;
-this establishes the only-if direction. 
+this establishes the only-if direction.
 
-To complete the proof, suppose that Diagram \ref{eqn.type.cart1} is a pullback, take an arbitrary $g\colon X\to X'$, and suppose given a commutative solid-arrow diagram as shown:
-\[
-\begin{tikzcd}[sep=small]
-  X\ar[rr, "g"]\ar[dd]\ar[rd]&&
-  X'\ar[dr]\ar[dd]\ar[dl, dotted]\\&
-  D(1)\ar[rr, crossing over]&&
-  D'(1)\ar[dd]\\
-  1\ar[dr]\ar[rr, equal]&&
-  1\ar[dr]\ar[dl, dotted]\\&
-  D(0)\ar[from=uu, crossing over]\ar[rr]&&
-  D'(0)
-\end{tikzcd}
-\]
-We can interpret the statement that Diagram \ref{eqn.type.cart3} is a pullback as
-saying that there are unique dotted arrows making the diagram commute. So, we
-need to show that if the front face is a pullback, then there are unique
-diagonal dotted arrows as shown in the homotopy type-theoretical sense.
-{\color{red} TODO} 
+For the if direction, note that Diagram \ref{eqn.type.cart3} is a pullback
+whenever Diagram \ref{eqn.type.cart1} is, as vertical maps are orthogonal to
+cartesian maps in $\Ha^{\down}$.
 \end{proof}
 
 \begin{thm}\label{thm:type.poly.cart.equiv.dir.cart}
@@ -817,6 +784,114 @@ $\Ha^{\down}_{\ulcorner}$ is the category of $(\ast,\ast)$-polynomials.
 By Theorem \ref{thm:type.poly.cart.equiv.dir.cart}, this $\infty$-category is equivalent
 to $\type{Poly}_{/_{\ulcorner} P}$ for a polynomial $P$. But this is an
 $\infty$-topos by Theorem 2.6.1 of \cite{GHK:Analytic.Monads}.
+\end{proof}
+
+Now, since $\Dir$ is a topos, so is $\Dir_{/D}$. And, as we saw above,
+$\Dir_{/_{\ulcorner} D}$ is a topos as well. What is the relationship between
+$\Dir_{/D}$ and $\Dir_{/_{\ulcorner} D}$?
+
+We will show that $\Dir_{/_{\ulcorner} D}$ is a subtopos of $\Dir_{/D}$ induced
+by a \emph{lex modality} on $\Dir_{/D}$. We will recall the definition of a lex
+modality and its basic theory here, before applying it to prove our desired
+theorem. Modalities were defined in Homotopy Type Theory in the HoTT Book
+\cite{UFP:HoTT.Book}, and their theory developed substantially in
+\cite{RSS:Modalities.in.HoTT}. This theory was externalized to
+$\infty$-toposes in \cite{ABFJ:Blakers.Massey} and \cite{ABFJ:Goodwillie} as a
+efficient way for working with localizations of $\infty$-toposes.
+
+\begin{defn}
+A \emph{modality} on an $\infty$-topos $\Ca$ is a stable orthogonal factorization
+system $(\La, \Ra)$. This is an orthogonal factorization system in which the
+left class is stable under pullback.
+
+A modality is \emph{lex} if for any square
+\[
+\begin{tikzcd}
+A \arrow[r, "h"] \arrow[d, "g"'] & C \arrow[d, "f"] \\
+B \arrow[r, "k"']                & D               
+\end{tikzcd}
+\]
+where $f$ and $g$ are in $\La$ and $h$ and $k$ are in $\Ra$ is a pullback. (See
+Theorem 3.11 of \cite{RSS:Modalties.in.HoTT}, condition (vii).)
+
+
+We say that a modality $(\La, \Ra)$ is \emph{contained in} $(\La', \Ra')$ ---
+written $(\La, \Ra) \leq (\La', \Ra')$ --- if $\Ra \subseteq \Ra'$.
+\end{defn}
+
+\begin{prop}
+If $(\La, \Ra)$ is a modality on $\Ca$, then there is an induced modality $(\La_X,
+\Ra_X)$ on $\Ca_{/X}$ where $\La_X$ (resp. $\Ra$) consists of those maps in $\Ca_{/X}$
+whose image under the forgetful functor to $\Ca$ is in $\La$ (resp. $\Ra$).
+
+If $(\La, \Ra)$ is lex, then so is $(\La_X, \Ra_X)$.
+\end{prop}
+\begin{proof}
+\jaz{That this forms an orthogonal factorization system is claimed without proof
+as Lemma 3.1.7 in \cite{ABFJ:Blakers.Massey}. TODO would be to prove this
+fully.}
+
+Recall that the forgetful functor $\Ca_{/X} \to \Ca$ creates pullbacks. Therefore,
+$(\La_X, \Ra_X)$ is a modality --- $\La_X$ is closed under pullback since $\La$
+is. Furthermore, if $(\La, \Ra)$ is lex, then so is $(\La_X, \Ra_X)$ because the
+necessary diagram is a pullback if and only if its underlying diagram in $\Ca$
+is one. 
+\end{proof}
+
+\begin{prop}
+  For any lex modality $(\La, \Ra)$ on an $\infty$-topos $\Ca$, we get a subtopos
+  consisting of those objects $X \in \Ca$ for which the terminal map $!_X : X
+  \to \ast$ is in $\Ra$. This includes the order of lex modalities into the
+  order of subcategories of $\Ca$ whose image consists of precisely the subtoposes.
+\end{prop}
+\begin{proof}
+\jaz{TODO. I
+  think I can find a citation for this --- it is certainly folklore. I'll check \cite{RSS:Modalities.in.HoTT}.}
+\end{proof}
+
+\begin{prop}
+The orthogonal factorization system $(\term{vertical}, \term{cartesian})$ on
+$\Ha^{\downarrow}$ (given by the cartesian fibration $\Ha\op \to \Ha$) is a
+lex modality.
+\end{prop}
+\begin{proof}
+\jaz{TODO: Cite a proof that this is an orthogonal factorization system.}
+
+  Vertical morphisms of bundles are closed under pullback since pullbacks are
+computed pointwise and the pullback of an equivalence is an equivalence. The
+modality is lex because in the following cube:
+\[
+    \begin{tikzcd}[row sep=1.5em, column sep = 1.5em]
+    A_1 \arrow[rr] \arrow[dr, crossing over] \arrow[dd,swap] \arrow[ddrr, phantom, "\ulcorner"
+    very near start] &&
+    C_1 \arrow[dd] \arrow[dr] \\
+    & B_1 \arrow[rr, crossing over]\arrow[dd, crossing over] \arrow[ddrr,
+    phantom, "\ulcorner" very near start]&&
+    D_1 \arrow[dd,"h"] \\
+    A_2 \arrow[rr,] \arrow[dr, "\sim"'] && C_2 \arrow[dr, "\sim"] \\
+    & B_2 \arrow[rr] && D_2 
+    \end{tikzcd}
+\]
+
+The bottom square is a pullback since its opposite faces are equivalences, and
+therefore the top face is also a pullback, so that the cube is a pullback in $\Ha^{\down}$.
+\end{proof}
+
+\begin{thm}
+The left exact modality $(\term{vertical}_D, \term{cartesian}_D)$ on
+$\Ha^{\downarrow}_{/\pi}$ exhibits $\Ha^{\downarrow}_{/_{\ulcorner} \pi}$ as a
+subtopos.
+
+As a corollary, we have a subtopos inclusion $\Dir_{/_{\ulcorner} D}
+\hookrightarrow \Dir_{/D}$. \jaz{So $\Dir_{/D}$ is equivalently a presheaf topos
+  $\Ha^{\downarrow/D}$; what is the topology that presents $\Dir_{/_{\ulcorner}
+  D}$ as a sheaf topos?}
+\end{thm}
+\begin{proof}
+We prove this for the equivalent categories $\Ha^{\down}_{/\pi}$. This then
+follows immediately from Proposition \ref{prop:lex.modalities.subtoposes} by
+noting that the objects of $\Ha^{\down}_{/_{\ulcorner} \pi}$ are precisely those objects
+in $\Ha^{\down}_{/\pi}$ whose terminal morphism is in $\term{cartesian}_{\pi}$.
 \end{proof}
 
 \section{Ordinary Dirichlet Functors} \label{sec:ordinary.dirichlet.functors}
@@ -893,6 +968,13 @@ pointed lfc type classifies maps with lfc fibers.
 
 
 \section{Appendix}
+\begin{lem}\label{lem:slice.cone.equiv}
+There is an equivalence $S^{\triangleleft} \simeq \Hom_{\Ha}(!_0, S)$ over
+$\down$, natural in $S$.
+\end{lem}
+\begin{proof}
+\jaz{TODO}
+\end{proof}
 
 \begin{lem}\label{lem:cone.initial.equivalence}
 Let $\Ca$ be an $\infty$-category with an initial object. For any simplicial set
@@ -911,6 +993,9 @@ $J$, let $\Ca^{J^{\triangleleft}}_{\ast}$ be the $\infty$-category of
   \]
 The the dotted extension map  $\epsilon : \Ca^{J} \to \Ca^{J^{\triangleleft}}_{\ast}$ is an equivalence.
 \end{lem}
+\begin{proof}
+\jaz{To Type}
+\end{proof}
 
 \begin{lem}\label{lem:kan.extending.cone.adds.initial}
 If $\Ca$ is an $\infty$-category with an initial object, then the restriction
@@ -919,7 +1004,7 @@ $\Ca^{J^{\triangleleft}} \to \Ca^{J}$ has a left adjoint right inverse $\epsilon
 initial object. 
 \end{lem}
 \begin{proof}
-
+\jaz{TODO}
 \end{proof}
 
 
@@ -929,6 +1014,19 @@ If $\Ca$ is an $\infty$-category with an initial object $0$, and $d : D \to
 $D \xto{d} \Ca^J \xto{\epsilon} \Ca^{J^{\triangleleft}}$ has colimit $\colim d$.
 \end{lem}
 \begin{proof}
-For $\colim d : D \to \Ca$ to be the colimit of $d : D \to \Ca^J$ means that 
+For $\colim d : D \to \Ca$ to be the colimit of $d : D \to \Ca^J$ means that
+\jaz{To Type}
 \end{proof}
 
+
+\begin{lem}\label{lem:every.type.weakly.contractible.colimit}
+Every homotopy type $S$ is the colimit of the weakly contractible diagram
+$S^{\triangleleft} \to \ast^{\triangleleft} \xto{!_0} \Ha$.
+\end{lem}
+\begin{proof}
+We note that $!_0$ is the extension of the diagram $\ast : \ast \to \Ha$ by an
+initial object. Therefore, by Lemma
+\ref{lem:extending.diagram.with.initial.object.has.same.colimit}, this diagram
+has the same colimit as $S \to \ast \xto{\ast} \Ha$. The colimit of this diagram
+is $S$, because $\Ha$ is generated by the point $\ast$ --- see (cite). 
+\end{proof}
