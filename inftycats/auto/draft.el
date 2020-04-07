@@ -1,0 +1,31 @@
+(TeX-add-style-hook
+ "draft"
+ (lambda ()
+   (LaTeX-add-labels
+    "eqn.poly"
+    "thm:polynomial.set.characterization"
+    "thm:dirichlet.set.characterization"
+    "thm:dirichlet.set.equivalence"
+    "thm:polynomial.type.characterization"
+    "thm:dirichlet.type.characterization"
+    "sec:type.level"
+    "lem:bang.preserves.weakly.contractible.colimits"
+    "lem:type.bundle.yoneda"
+    "prop:set.characterizing.extent"
+    "prop:type.dirichlet.cartesian.iff.bundle.cartesian"
+    "eqn.type.cart1"
+    "eqn.type.cart2"
+    "eqn.type.cart3"
+    "thm:type.poly.cart.equiv.dir.cart"
+    "lem:slice.modality"
+    "prop:lex.modalities.subtoposes"
+    "lem:cartesian.modality"
+    "sec:ordinary.dirichlet.functors"
+    "lem:slice.cone.equiv"
+    "lem:cone.initial.equivalence"
+    "lem:kan.extending.cone.adds.initial"
+    "lem:extending.diagram.with.initial.object.has.same.colimit"
+    "lem:every.type.weakly.contractible.colimit"
+    "lem:hom.type.arrow"))
+ :latex)
+
