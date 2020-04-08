@@ -14,7 +14,7 @@ A polynomial functor $P : \Set \to \Set$ is a sum of representables
 P(X) := \sum_{b \in B} X^{E_b}
 \end{equation}
 where the family of sets $E_b$ depends on $b\in B$. This data is known
-in the computer science literature as a ``container'' \cite{Abbott}, but since such an indexed
+in the computer science literature as a ``container'' \cites{abbott2003categories}{abbott2005containers}{abbot2003categoriesthesis}, but since such an indexed
 family of sets can be represented by as a function
 \[
   \begin{tikzcd}
@@ -42,7 +42,7 @@ In terms of bundles, a map $\pi\to\pi'$ is a diagram of the following sort:
 \]
 We refer to these special spans as \emph{contravariant} morphisms of bundles.
 
-\begin{thm}[cite]
+\begin{thm}[Theorem 2.17 of \cite{kock2012polynomial}]
 The category of polynomial functors and natural transformations is equivalent to
 the category of bundles and contravariant morphisms.
 \end{thm}
@@ -80,7 +80,7 @@ sums of contravariant representables \emph{Dirichlet functors}.
 We will show in this paper that Dirichlet functors are, quite robustly, the
 contravariant analogue of polynomial functors. In particular, the many equivalent ways to
 say that a functor is polynomial have contravariant analogues.
-\begin{thm}[cite]\label{thm:polynomial.set.characterization}
+\begin{thm}[See discussion in 1.18 of \cite{kock2012polynomial}]\label{thm:polynomial.set.characterization}
   Let $P : \Set \to \Set$ be a functor. Then the following are equivalent.
   \begin{enumerate}
   \item $P$ is polynomial.
@@ -145,7 +145,7 @@ B \arrow[r, "f"']                                       & B'
 which preserve the number of elements in each row --- we find that such a morphism
 is both a co- and contravariant morphism of bundles. It is well known that such
 \emph{cartesian} morphisms of bundles correspond to \emph{cartesian} natural
-transformations between polynomial functors \cite[Theorem 3.8]{GambinoKock} --- those whose naturality
+transformations between polynomial functors \cite[Theorem 3.8]{kock2012polynomial} --- those whose naturality
 squares are pullbacks. This is true as well for Dirichlet functors.
 \begin{thm}
 A natural transformation $D \to D'$ of Dirichlet functors is Cartesian if and
@@ -178,9 +178,9 @@ proofs to go smoothly, we will need to explicitly keep track of the
 self-dualizing isomorphism $\downarrow \xto{\sim} (\downarrow)\op$ on the walking arrow.
 
 \begin{defn}
-  We let $\downarrow$ be the walking arrow --- the category $\term{dom} \to
-  \term{cod}$ consisting of a single morphism. We denote by $\sigma : \downarrow
-  \to (\downarrow)\op$ the self-dualizing isomorphism of $\downarrow$, and note
+  We let $\down$ be the walking arrow --- the category $\term{dom} \to
+  \term{cod}$ consisting of a single morphism. We denote by $\sigma : \down
+  \to (\downarrow)\op$ the self-dualizing isomorphism of $\down$, and note
   that $\sigma\inv = \sigma\op$.
 \end{defn}
 
@@ -211,7 +211,7 @@ fact an identity), so $!_{(-)}$ is fully faithful. Therefore, all three functors
 going from $\Set \to \Set^{\down}$ are fully faithful.
 
 The existence of the final adjoint can be deduced from the fact that $!^{(-)}$ preserves all
-limits. It sends a bundle $\pi : E \to B$ to the largest subset $\term{ZC}(B)$ of $B$ for
+limits. It sends a bundle $\pi : E \to B$ to the largest subset $\term{ZC}(\pi)$ of $B$ for
 which the following square is a pullback
 \[
   \begin{tikzcd}[column sep=large]
@@ -399,17 +399,27 @@ $D(X)$ is precisely the above limit $\ext_{D!_0}(X)$.
 \end{proof}
 
 \begin{rmk}
+ Since polynomial functors preserve connected limits, the composite $P \circ D$
+ of a polynomial functor after a Dirichlet functor is Dirichlet. On the other
+ hand, the composite $D' \circ D\op$ of two Dirichlet functors does not in
+ general preserve connected limits, since $D\op$ sends connected colimits in
+ $\Set$ to connected colimits in $\Set\op$, and $D'$ does not necessarily
+ preserve these. Furthermore, composites of Dirichlet functors are not in
+ general accessible.   
+\end{rmk}
+
+\begin{rmk}
 The six adjoints of \cref{prop:adjoint.sextuple} correspond, under
 the equivalence of \cref{thm:dirichlet.set.characterization}, to
 \begin{align*}
-  \term{ZC}(D) &\sim \mbox{the coefficient of $0^X$ in $D$.}\\
-  !^{C} &\sim X \mapsto C \times 0^X \\
-  \cod(D) &\sim D(0) \\
-  \const(C) &\sim X \mapsto C \\
-  \dom(D) &\sim D(1) \\
-  !_{C} &\sim X \mapsto C^X 
+  \term{ZC}(D!_0) &\cong \mbox{the coefficient of $0^X$ in $D$.}\\
+  \ext(!^{C}) &\cong X \mapsto C \times 0^X \\
+  \cod(D!_0) &\cong D(0) \\
+  \ext( \const(C) ) &\cong X \mapsto C \\
+  \dom(D!_0) &\cong D(1) \\
+  \ext( !_{C} ) &\cong X \mapsto C^X 
 \end{align*}
-\dis{If we're using \cref{thm:dirichlet.set.characterization}, shouldn't we be thinking in terms of bundles?} In particular, $!_{(-)}$ corresponds to the Yoneda embedding.
+ In particular, $!_{(-)}$ corresponds to the Yoneda embedding.
 \end{rmk}
 
 \section{Cartesian Transformations between Dirichlet Functors}
@@ -493,7 +503,7 @@ saying that there are unique dotted arrows making the diagram commute. So, we ne
 This follows by composing the equivalence of $\Dir_{\ulcorner}$ with
 $\Set^{\down}$ from
 \cref{prop:set.dirichlet.cartesian.iff.bundle.cartesian} with that of
-\cite[Proposition 3.14]{GambinoKock}, noting that
+\cite[Proposition 3.14]{kock2012polynomial}, noting that
 $\Set^{\down}_{\ulcorner}$ is the category of $(1,1)$-polynomials. 
 \end{proof}
 
@@ -505,7 +515,7 @@ $\Set^{\down}_{\ulcorner}$ is the category of $(1,1)$-polynomials.
 \begin{proof}
 By Theorem \ref{thm:set.poly.cart.equiv.dir.cart}, this category is equivalent
 to $\type{Poly}_{\ulcorner/P}$ for a polynomial $P$. But this is a topos as
-observed in Remark 2.6.2 of \cite{GHK:Analytic.Monads}.
+observed in \cite[Remark 2.6.2]{GHK:Analytic.Monads}.
 \end{proof}
 
 Now, since $\Dir$ is a topos, so is $\Dir_{/D}$. And, as we saw above,
@@ -534,7 +544,8 @@ B' \arrow[r, equals] & B' \arrow[r]                           & B
   subtopos inclusion.
 \end{thm}
 \begin{proof}
-We have displayed both the action of the left localization and its unit. The
+We have displayed both the action of the left adjoint and its unit --- the
+universal map into the pullback. The
 counit is always an isomorphism since pullbacks are unique up to unique
 isomorphism.
 
