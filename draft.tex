@@ -14,7 +14,7 @@ A polynomial functor $P : \Set \to \Set$ is a sum of representables
 P(X) := \sum_{b \in B} X^{E_b}
 \end{equation}
 where the family of sets $E_b$ depends on $b\in B$. This data is known
-in the computer science literature as a ``container'', but since such an indexed
+in the computer science literature as a ``container'' \cite{Abbott}, but since such an indexed
 family of sets can be represented by as a function
 \[
   \begin{tikzcd}
@@ -167,8 +167,7 @@ functors with cartesian natural transfromations.
 
 
 \begin{acknowledgements}
-Joyal, Kock(!), AFOSR. David Jaz Myers was supported by the National Science Foundation grant DMS-1652600.
-Spivak acknowledges support from AFOSR grants FA9550-19-1-0113 and FA9550-17-1-0058.
+Joyal, Kock(!), AFOSR. David Jaz Myers was supported by the National Science Foundation grant DMS-1652600 and Spivak was supported by AFOSR grants FA9550-19-1-0113 and FA9550-17-1-0058.
 \end{acknowledgements}
 
 
@@ -221,6 +220,7 @@ which the following square is a pullback
 "\ulcorner" very near start] & E \arrow[d, "\pi"] \\
 \term{ZC}(\pi) \arrow[r, hookrightarrow]                                       & B
 \end{tikzcd}
+\qedhere
 \]
 \end{proof}
 We prove a few quick facts we will use later.
@@ -246,7 +246,7 @@ The Yoneda embedding $\yo : (\downarrow)\op \to \Set^{\downarrow}$ is equal to t
 composite $$(\downarrow)\op \xto{\sigma\op} \,\downarrow\, \xto{!_{0}} \Set
 \xto{!_{(-)}} \Set^{\downarrow}.$$
 
-As a corollary, any $\pi : \downarrow \to \Set$ equals the composite
+As a corollary, any $\pi : \downarrow \to \Set$ is naturally isomorphic to the composite
 $$\downarrow \xto{\sigma} (\downarrow)\op \xto{!_0\op} \Set\op \xto{!_{(-)}\op}
 (\Set^{\downarrow})\op \xto{\Set^{\downarrow}(-, \pi)} \Set$$
 by the Yoneda lemma.
