@@ -146,7 +146,7 @@ B \arrow[r, "f"']                                       & B'
 which preserve the number of elements in each row --- we find that such a morphism
 is both a co- and contravariant morphism of bundles. It is well known that such
 \emph{cartesian} morphisms of bundles correspond to \emph{cartesian} natural
-transformations between polynomial functors (cite) --- those whose naturality
+transformations between polynomial functors \cite[Theorem 3.8]{GambinoKock} --- those whose naturality
 squares are pullbacks. This is true as well for Dirichlet functors.
 \begin{thm}
 A natural transformation $D \to D'$ of Dirichlet functors is Cartesian if and
@@ -168,6 +168,7 @@ functors with cartesian natural transfromations.
 
 \begin{acknowledgements}
 Joyal, Kock(!), AFOSR. David Jaz Myers was supported by the National Science Foundation grant DMS-1652600.
+Spivak acknowledges support from AFOSR grants FA9550-19-1-0113 and FA9550-17-1-0058.
 \end{acknowledgements}
 
 
@@ -222,7 +223,6 @@ which the following square is a pullback
 \end{tikzcd}
 \]
 \end{proof}
-\dis{Shall we say that $\term{ZC}(\pi)$ is also the coefficient of $0^X$ in the extent?}
 We prove a few quick facts we will use later.
 \begin{lem}\label{lem:bang.preserves.connected.colimits}
   The functor $!_{(-)}\colon\Set\to\Set^{\down}$ from \eqref{eqn.bangbang} preserves connected colimits.
@@ -493,8 +493,7 @@ saying that there are unique dotted arrows making the diagram commute. So, we ne
   $$(-)^N \mapsto N^{(-)}.$$
 \end{thm}
 \begin{proof}
-  \jaz{Need to find a good citation for this result --- that polynomial functors
-  and cartesian transforms are bundles and cartesian maps (for 1-cats).}
+  \cite[Proposition 3.14]{GambinoKock}.,....
 \end{proof}
 
 \begin{cor}
